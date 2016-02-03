@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>CHESS BOARDz 012616-0412</title>
+		<meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #505050;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				color: #ffffff;
+				background: #000000;
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				text-align: center;				
+				z-index: 100;
+				display:block;
+				font-size: 160%;
+				font-weight: bold;
+				font-family: "sans-serif", "arial", "courier", "Times New Roman", Georgia, Serif;
+                                         
+			}
+			
+			
+			   #player1clock {
+      				
+				float: left;
+				font-size: 320%;
+					  }
+			    #player2clock {
+				
+				float: right;
+				font-size: 320%;
+					  }
+			    .now_playing {
+			      border-bottom: .2em solid #aa0000;
+					 }
+			
+			
+			#status {
+				color: #ffffff;
+				background: #000000;
+				position: absolute;
+				bottom: 0px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+				font-size: 160%;
+				font-weight: bold;
+				font-family: "sans-serif", "arial", "courier", "Times New Roman", Georgia, Serif;
+
+			}
+			
+
+			a { color: skyblue }
+		</style>
+	
+	
+	
+		
+		
+    <script>
+    var SPACEBAR = 32;
+    var ESCAPE = 27;
+    var ARROWS = function(key) {
+      return (key >= 37 && key <= 40) || (key >= 63232 && key <= 63235);
+    };
+
+    var initial_time = 10 * 60*5;
+    var game = null;
+
+    function createGame() {
+      game = new Game(initial_time, 'infodata', 'player1clock', 'player2clock');
+      game.resetClocks();
+    }
+
+    function formatTime(tenths) {
+      var minutes = String(Math.floor(tenths/600));
+      var seconds = String(Math.floor(tenths/10) % 60);
+      if (seconds.length == 1) { seconds = '0' + seconds;}
+      var decimal = String(tenths % 10);
+  
+      // if we have no minutes, include tenths of a second
+      return (minutes != '0') ?
+        (minutes + ':' + seconds) :
+        (seconds + '.' + decimal);
+    }
+
+    function Player(clock_id, initial_time, game) {
+      this.clock = document.getElementById(clock_id);
+      this.initial_time = initial_time;
+      this.time = this.initial_time;
+      this.game = game;
+      this.opponent = null;
+    }
+    Player.prototype.play = function() {
+      var opponent = this.opponent;
+      var game = this.game;
+      if (!game.game_over) {
+        clearTimeout(game.timer_loop);
+        game.timer_loop = setInterval(function(){
+          opponent.time -= 1;
+          if (opponent.time == 0) {
+            clearTimeout(game.timer_loop);
+            game.game_over = true;
+            spin = 1; //switch to spin mode.
+            game.infodata.innerHTML = 'GAME OVER';
+            game.infodata.className = '';
+          }
+          else{  game.infodata.innerHTML = 'IN PLAY';   }
+          game.displayTimers();
+        }, 100);        
+        opponent.clock.className = 'now_playing';
+        this.clock.className = '';
+        game.infodata.className = 'hidden';
+      }
+    }
+
+    function Game(initial_time, info_id, p1_clock_id, p2_clock_id) {
+      this.infodata = document.getElementById(info_id);
+      this.player1 = new Player(p1_clock_id, initial_time, this);
+      this.player2 = new Player(p2_clock_id, initial_time, this);
+      this.player1.opponent = this.player2;
+      this.player2.opponent = this.player1;
+      this.timer_loop = null;
+      this.game_over = false;
+    }
+    // Dispatcher when we press a key
+    Game.prototype.keypress = function(e) {
+      var key = e.charCode || e.keyCode || 0;
+      var keychar = String.fromCharCode(key);
+      // left half of keyboard
+      if ('qwertasdfgzxcvb'.indexOf(keychar) != -1) {
+        spin = 3; //switch to black side. 
+        this.player1.play(); }
+      // right half of keyboard
+      else if (("yuiop[]\hjkl;'nm,./".indexOf(keychar) != -1)
+               || ARROWS(key)) {
+        spin = 2; //switch to white side
+        this.player2.play(); }
+      else if (key == SPACEBAR) {
+       		spin = 1; //switch to spin mode.	
+        	this.pause(); }
+      else if (key == ESCAPE) {
+        this.resetClocks(); }
+      else if ('=+'.indexOf(keychar) != -1) {
+        this.player1.initial_time += 300;
+        this.player2.initial_time += 300;
+        this.resetClocks(); }
+      else if ('-_'.indexOf(keychar) != -1) {
+        if (this.player1.initial_time >= 600) {
+          this.player1.initial_time -= 300;          
+        }
+        if (this.player2.initial_time >= 600) {
+          this.player2.initial_time -= 300;          
+        }
+        this.resetClocks();
+      }
+    }
+    Game.prototype.pause = function() {
+      if (!this.game_over) {
+        var infodata = this.infodata; 
+        infodata.innerHTML = 'PAUSED';
+        infodata.className = '';
+        clearTimeout(this.timer_loop);
+        this.timer_loop = setInterval(function(){
+          if (infodata.className == '') {
+            infodata.className = 'hidden';
+          }
+          else {
+            infodata.className = '';
+          }
+        }, 500);
+      }
+    }
+    // Show the timers
+    Game.prototype.displayTimers = function() {
+      this.player1.clock.innerHTML = formatTime(this.player1.time);
+      this.player2.clock.innerHTML = formatTime(this.player2.time);
+         
+    }
+    // Reset the clocks
+    Game.prototype.resetClocks = function() {
+      clearTimeout(this.timer_loop);
+      this.player1.clock.className = '';
+      this.player2.clock.className = '';
+      this.infodata.className = 'hidden';
+      this.player1.time = this.player1.initial_time;
+      this.player2.time = this.player2.initial_time;
+      this.game_over = false;
+      this.displayTimers();
+      game.infodata.innerHTML = ' ';  //clear status
+    }
+    
+	
+    
+ 
+    
+    
+    
+  </script>
+		
+		
+	</head>
+	<body style='' onkeypress='game.keypress(event)' onload='createGame()' >
+		<div id="info">		
+		
+		<table border="0" style="background-color:#000000;color:#FFFFFF;width:100%" cellpadding="3" cellspacing="1">
+	<tr>	
+		<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: left;width: 100%;line-height:100px;" type="button"  onclick="spin=3;game.player1.play();" >WHITE</button> </td>
+		<td rowspan="2" > <div id='player1clock'>0:00</div> </td>
+		<td><CENTER> <button style="background: white;" type="button">START GAME</button></CENTER></td>
+		<td rowspan="2" > <div id='player2clock'>0:00</div> </td>
+		<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: right;;width: 100%;heigth: 100%;line-height:100px;" type="button" onclick="spin=2;game.player2.play();" >BLACK</button> </td>
+	</tr>
+	<tr>
+		
+		
+		<td width="50%" ><CENTER> <div id='infodata' class='hidden'> </CENTER></div> </td>
+		
+		
+	</tr>
+</table>
+
+    
+
+		         
+			 </div>
+			 
+			<div id="status">
+			 CHESS BOARDz <button style="background: white;" type="button" onclick="setBlackCAM();" >VIEW BLACK</button> <button style="background: white;" type="button" onclick="setWhiteCAM();" >VIEW WHITE</button> <button style="background: white;" type="button"  onclick="setTopCAM();" >VIEW TOP</button>  <button style="background: white;" type="button" onclick="setSpinCAM();" >VIEW ROTATE</button> </div>
+			
+  			
+    
+
+		<script src="js/three.min.js"></script>
+		<script src="js/loaders/collada/Animation.js"></script>
+		<script src="js/loaders/collada/AnimationHandler.js"></script>
+		<script src="js/loaders/collada/KeyFrameAnimation.js"></script>
+
+		<script src="js/loaders/ColladaLoader.js"></script>
+
+		<script src="js/Detector.js"></script>         
+		<!-- <script src="js/libs/stats.min.js"></script>   -->
+
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			//var container, stats;
+			var container;
+
+			var camera, scene, renderer, objects,spin;
+			var particleLight;
+			
+			var  raycaster;
+			var mouse = new THREE.Vector2(), INTERSECTED,SELECTED;
+			
+			var dae;
+			var daeKl,daeKd,daeQl,daeQd;
+			var daek1l,daek2l, daek1d,daek2d;
+			var daeB1l,daeB2l , daeB1d, daeB2d;
+			var daeR1l,daeR2l , daeR1d , daeR2d;
+			var daeP1l ,daeP2l, daeP3l,daeP4l,daeP5l,daeP6l,daeP7l,daeP8l;
+			var daeP1d ,daeP2d, daeP3d,daeP4d,daeP5d,daeP6d,daeP7d,daeP8d;
+			
+			
+			var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );				
+			var material_hold = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
+						
+			raycaster = new THREE.Raycaster();
+			
+			
+			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
+			function onDocumentMouseMove( event ) {
+
+				event.preventDefault();
+
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+			}
+
+
+			
+			
+			//setMaterial(dae, new THREE.MeshBasicMaterial({color: 0xff0000}));
+			var setMaterial = function(node, material) {
+                           node.material = material;
+                           if (node.children) {
+                           for (var i = 0; i < node.children.length; i++) {
+                           setMaterial(node.children[i], material);
+                           }
+                                              }
+                                                                   }
+                                                                   
+                                                                   
+                                                                   
+                        var copytMaterial = function(node, materialto ) {
+                           materialto = node.material;                          
+                                                                   }    
+                                                                                                      
+                                                                   
+                            
+                                                                   
+			var loader = new THREE.ColladaLoader();
+			scene = new THREE.Scene();
+			//scene.fog = new THREE.FogExp2( 0xaaccff, 0.0007 );	
+			scene.fog = new THREE.Fog( 0xffffff, 300, 1000 );
+			scene.fog.color.setHSL( 0.51, 0.6, 0.6 );
+					
+			var sqArray = new Array()
+			                                                            
+                                                                   
+                                                                   
+
+			//var loader = new THREE.ColladaLoader();
+			//loader.options.convertUpAxis = true;
+			
+	
+	        
+	
+	
+		
+		loader.load( 'chesspieces/king.dae', function ( collada ) { 		
+				daeKl = collada.scene;	
+				init();
+				animate();					
+			});
+			
+		loader.load( 'chesspieces/king.dae', function ( collada ) { 
+				daeKd = collada.scene;	
+				init();
+				animate();					
+			});
+			
+	
+			
+			
+			
+		loader.load( 'chesspieces/queen.dae', function ( collada ) {
+				daeQl = collada.scene;
+				init();
+				animate();
+			} );
+			
+		loader.load( 'chesspieces/queen.dae', function ( collada ) {
+				daeQd = collada.scene;
+				init();
+				animate();
+			} );
+			
+			
+		loader.load( 'chesspieces/knight.dae', function ( collada ) {
+				daek1l = collada.scene;	
+				init();
+				animate();
+			} );
+	
+		loader.load( 'chesspieces/knight.dae', function ( collada ) {
+				daek2l = collada.scene;	
+				init();
+				animate();
+			} );		
+			
+			
+		loader.load( 'chesspieces/knight.dae', function ( collada ) {
+				daek1d = collada.scene;	
+				init();
+				animate();
+			} );
+			
+		loader.load( 'chesspieces/knight.dae', function ( collada ) {
+				daek2d = collada.scene;	
+				init();
+				animate();
+			} );
+						
+			
+			
+		loader.load( 'chesspieces/rook.dae', function ( collada ) {
+				daeR1l = collada.scene;				
+				init();
+				animate();
+			} );
+			
+		loader.load( 'chesspieces/rook.dae', function ( collada ) {
+				daeR2l = collada.scene;				
+				init();
+				animate();
+			} );
+
+
+		loader.load( 'chesspieces/rook.dae', function ( collada ) {
+				daeR1d = collada.scene;				
+				init();
+				animate();
+			} );
+			
+		loader.load( 'chesspieces/rook.dae', function ( collada ) {
+				daeR2d = collada.scene;				
+				init();
+				animate();
+			} );
+
+
+			
+		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
+				daeB1l = collada.scene;	
+							
+				init();
+				animate();
+			} );
+	
+		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
+				daeB2l = collada.scene;	
+							
+				init();
+				animate();
+			} );		
+	
+		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
+				daeB1d = collada.scene;	
+							
+				init();
+				animate();
+			} );			
+	
+		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
+				daeB2d = collada.scene;	
+						
+				init();
+				animate();
+			} );		
+			
+			
+			
+			loader.load( 'chesspieces/pawn.dae', function ( collada ) {				
+			        daeP1l = collada.scene;		
+			               			        
+				init();
+				animate();
+			} );
+			
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP2l = collada.scene;				        			
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );		
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP3l = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP4l = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP5l = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP6l = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP7l = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP8l = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+	
+	
+	//dark side pawns
+	
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP1d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP2d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );		
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP3d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP4d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP5d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP6d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP7d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+			
+				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
+			        daeP8d = collada.scene;				
+			        //window.referenceModel = daeP.scene.children[0];
+			        //var refObject = window.referenceModel;			        
+				init();
+				animate();
+			} );
+	
+	
+			
+			
+		var setSquares = function( offset ) {		
+		   for ( var r = 0; r < 4; r++  ) {	
+		   for ( var i = 0; i < 4; i++  ) {
+			//Squares
+				var square_geometry = new THREE.BoxGeometry(500, 10, 500, 10, 0, 10 );
+				var square_material = new THREE.MeshBasicMaterial({color: 0xAAAAAA });
+				var square = new THREE.Mesh(square_geometry, square_material);
+				square.scale.x = square.scale.y = square.scale.z = 0.002;
+				square.position.x = offset +( 2 * i);
+				square.position.y = 0;
+				square.position.z = offset +( 2 * r);
+				scene.add( square );
+				
+				}
+				}
+				
+				}		
+			
+			
+			var setSpinCAM = function() {	
+				spin = 1;				
+				}
+			
+				
+			var setWhiteCAM = function() {	
+				spin = 2;								
+				}
+				
+				
+			var setBlackCAM = function() {	
+				spin = 3;  				
+				}	
+				
+			
+			var setTopCAM = function() {
+				spin = 4;			
+				}
+			
+				
+			var setDAE = function( dae , daex , daez , daecolor ) {	
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.002;
+				dae.position.x = daex;    //default 1.0
+				dae.position.y = 0.0
+				dae.position.z = daez;    // default 1.0	
+				setMaterial(dae, daecolor );
+				dae.updateMatrix();				
+				scene.add( dae );
+				}
+
+
+
+			var init = function() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1500 );
+				camera.position.set( 3, 3, 3 );
+
+				//setTopCAM();
+				
+				spin = 1; //switch to spin mode.
+
+       				
+				
+				// Grid
+				var size = 4, step = 1;
+
+				var geometry = new THREE.Geometry();
+				var material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+
+				for ( var i = - size; i <= size; i += step ) {
+
+					geometry.vertices.push( new THREE.Vector3( - size, - 0.04, i ) );
+					geometry.vertices.push( new THREE.Vector3(   size, - 0.04, i ) );
+
+					geometry.vertices.push( new THREE.Vector3( i, - 0.04, - size ) );
+					geometry.vertices.push( new THREE.Vector3( i, - 0.04,   size ) );
+
+				}
+
+				var line = new THREE.LineSegments( geometry, material );
+				scene.add( line );				
+				
+
+				// Add the COLLADA				
+				setSquares( -3.5 );				
+				setSquares( -2.5 );
+				
+				//var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
+				var material_white = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+				  
+							
+				setDAE( daek1l, -2.5,3.5, material_white );
+				setDAE( daek2l,  2.5,3.5, material_white );	
+					
+				setDAE( daeR1l, -3.5,3.5, material_white );
+				setDAE( daeR2l,  3.5,3.5, material_white );
+				daeR1l.userData = "d";
+				daeR2l.userData = "d";
+				
+				setDAE( daeB1l, -1.5,3.5, material_white );
+				setDAE( daeB2l,  1.5,3.5, material_white );
+				setDAE( daeQl,  -0.5,3.5, material_white );
+				setDAE( daeKl,   0.5,3.5, material_white );
+				
+				setDAE( daeP1l ,  3.5, 2.5, material_white );
+				setDAE( daeP2l ,  2.5, 2.5, material_white );
+				setDAE( daeP3l ,  1.5, 2.5, material_white );
+				setDAE( daeP4l ,  0.5, 2.5, material_white );
+				setDAE( daeP5l , -0.5, 2.5, material_white );
+				setDAE( daeP6l , -1.5, 2.5, material_white );
+				setDAE( daeP7l , -2.5, 2.5, material_white );
+				setDAE( daeP8l , -3.5, 2.5, material_white );
+				
+	
+	//the dark side. 
+	
+				setDAE( daek1d, -2.5,-3.5, material_black );				
+				setDAE( daek2d, 2.5,-3.5,  material_black );	
+					
+				setDAE( daeR1d, -3.5,-3.5, material_black );
+				setDAE( daeR2d, 3.5,-3.5,  material_black );
+				daeR1d.userData = "d";
+				daeR2d.userData = "d";
+				
+				setDAE( daeB1d, -1.5,-3.5, material_black );
+				setDAE( daeB2d,  1.5,-3.5, material_black );
+				setDAE( daeQd,  -0.5,-3.5, material_black );
+				setDAE( daeKd,   0.5,-3.5, material_black );
+				
+				setDAE( daeP1d ,  3.5, -2.5, material_black );
+				setDAE( daeP2d ,  2.5, -2.5, material_black );
+				setDAE( daeP3d ,  1.5, -2.5, material_black );
+				setDAE( daeP4d ,  0.5, -2.5, material_black );
+				setDAE( daeP5d , -0.5, -2.5, material_black );
+				setDAE( daeP6d , -1.5, -2.5, material_black );
+				setDAE( daeP7d , -2.5, -2.5, material_black );
+				setDAE( daeP8d , -3.5, -2.5, material_black );
+	
+				
+				//var clone = new THREE.Mesh(  daeP1l.clone()  , material_black );
+				//clone.position.set(0,1,0);				
+				//setMaterial(dae, daecolor );
+				//clone.updateMatrix();				
+				//scene.add( clone );
+				//setDAE( clone , 0, 0, material_black );
+				
+						
+				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+				scene.add( particleLight );
+
+				// Lights
+
+				scene.add( new THREE.AmbientLight( 0x888888 ) );
+
+				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xaaaaaa );
+				directionalLight.position.x = Math.random() - 0.5;
+				directionalLight.position.y = Math.random() - 0.5;
+				directionalLight.position.z = Math.random() - 0.5;
+				directionalLight.position.normalize();
+				scene.add( directionalLight );
+
+				var pointLight = new THREE.PointLight( 0x555555, 4 );
+				particleLight.add( pointLight );
+
+				renderer = new THREE.WebGLRenderer(  { antialias: true }  );
+				renderer.setClearColor( 0x5d5d5d );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				//renderer.shadowMap.enabled = true;
+				//renderer.shadowMap.type = THREE.PCFShadowMap;
+				
+				container.appendChild( renderer.domElement );			
+				
+				
+
+				
+				//renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();			
+				//stats.update();
+
+			}
+
+			var clock = new THREE.Clock();
+
+			function render() {
+
+
+			raycaster.setFromCamera( mouse, camera );
+			
+				
+
+                              if( spin == 1 ){
+
+
+				//Roate around board
+				var timer = Date.now() * 0.0005;
+				camera.position.x = Math.cos( timer ) * 10;
+				camera.position.y = 7.5;
+				camera.position.z = Math.sin( timer ) * 10;
+				
+				//game.infodata.innerHTML = camera.position.x;
+				
+				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
+				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
+				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+				}
+				
+			      if( spin == 2 ){
+				//White position
+				camera.position.x = 6;
+				camera.position.y = 7.5;
+				camera.position.z = 10;
+				
+				particleLight.position.x = -3009;
+				particleLight.position.y = 4000;
+				particleLight.position.z = -3009;				  
+				  }
+				
+				 if( spin == 3 ){
+				 //Black position
+				camera.position.x = 6;
+				camera.position.y = 7.5;
+				camera.position.z = -10;
+				
+				particleLight.position.x = 3009;
+				particleLight.position.y = 4000;
+				particleLight.position.z = 3009;
+				 }
+				
+				
+				 if( spin == 4 ){
+				//Top position			        
+				camera.position.x = 0;
+				camera.position.y = 15;
+				camera.position.z = 0;
+				
+				particleLight.position.x = 0;
+				particleLight.position.y = 25000;
+				particleLight.position.z = 0;
+				 }
+				
+				camera.lookAt( scene.position );
+
+				var intersects = raycaster.intersectObjects( scene.children, true );
+				
+				
+				if ( intersects.length > 0 ) {				
+				
+					SELECTED = intersects[ 0 ].object;					
+
+					if ( INTERSECTED != intersects[ 0 ].object ) {					
+					console.log('intersect: ' + intersects[0].point.x.toFixed(2) + ', ' + intersects[0].point.y.toFixed(2) + ', ' + intersects[0].point.z.toFixed(2) + ')');
+}
+						
+						if ( INTERSECTED ) {												
+						        //save original mat
+						        //INTERSECTED.currentMat = INTERSECTED.material
+						         material_hold = SELECTED.material;
+						        //copyMaterial( SELECTED , material_hold );
+							//set new material
+						        setMaterial( INTERSECTED , new THREE.MeshBasicMaterial({color: 0xff0000}));		
+						                   }				
+						INTERSECTED = intersects[ 0 ].object;						
+						//setMaterial( INTERSECTED , new THREE.MeshBasicMaterial({color: 0xff0000}))
+
+					
+
+				 } else { 
+
+					//if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+					//if ( INTERSECTED ) setMaterial( SELECTED , new THREE.MeshBasicMaterial({color: 0x0000ff} ));
+					if ( INTERSECTED ) setMaterial( SELECTED , material_hold );	
+						
+					
+					//console.log( "NO INTERSECT" );
+					INTERSECTED = null;
+
+				}
+				
+							
+
+				THREE.AnimationHandler.update( clock.getDelta() );
+
+				renderer.render( scene, camera );
+				
+
+			}
+
+		</script>
+	</body>
+</html>
