@@ -1,6 +1,8 @@
 # CHESS-BOARDz
 WebGL Chess Board. 
 
+Work in progress, does not play actual game yet - http://www.userspace.org/chessworld/
+
 TODO:<BR>
  [ ] Add Piece Selector <BR>
  [ ] Chess Board Squares and named positions.<BR>
