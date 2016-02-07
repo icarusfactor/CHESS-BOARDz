@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>CHESS BOARDz 012616-0412</title>
+		<title>CHESS BOARDz 020716-0447</title>
 		<meta http-equiv="cache-control" content="max-age=0" />
 		<meta http-equiv="cache-control" content="no-cache" />
 		<meta http-equiv="expires" content="0" />
@@ -214,7 +214,7 @@
 		
 		
 	</head>
-	<body style='' onkeypress='game.keypress(event)' onload='createGame()' >
+	<body style='' onkeypress='game.keypress(event)' onload='createGame();' >
 		<div id="info">		
 		
 		<table border="0" style="background-color:#000000;color:#FFFFFF;width:100%" cellpadding="3" cellspacing="1">
@@ -259,13 +259,12 @@
 
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-			//var container, stats;
+			
 			var container;
-
-			var camera, scene, renderer, objects,spin;
+			var camera, scene, renderer, raycaster ,objects,spin;
 			var particleLight;
 			
-			var  raycaster;
+			
 			var mouse = new THREE.Vector2(), INTERSECTED,SELECTED;
 			
 			var dae;
@@ -277,23 +276,101 @@
 			var daeP1d ,daeP2d, daeP3d,daeP4d,daeP5d,daeP6d,daeP7d,daeP8d;
 			
 			
-			var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );				
-			var material_hold = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
+			
+			
+			var material_black_p1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });		
+			var material_black_p2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
+			var material_black_p3 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
+			var material_black_p4 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
+			var material_black_p5 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			var material_black_p6 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
+			var material_black_p7 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
+			var material_black_p8 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			material_black_p1.name = "BP1";
+			material_black_p2.name = "BP2";
+			material_black_p3.name = "BP3"; 
+			material_black_p4.name = "BP4";
+			material_black_p5.name = "BP5"; 
+			material_black_p6.name = "BP6";
+			material_black_p7.name = "BP7";
+			material_black_p8.name = "BP8";
+			
+			var material_black_k1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			var material_black_k2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			material_black_k1.name = "Bk1";
+			material_black_k2.name = "Bk2";			
+			
+			var material_black_r1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			var material_black_r2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			material_black_r1.name = "Br1";
+			material_black_r2.name = "Br2";	
+			
+			
+			var material_black_b1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			var material_black_b2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			material_black_b1.name = "Bb1";
+			material_black_b2.name = "Bb2";	
+						
+			var material_black_K = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			var material_black_Q = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
+			material_black_K.name = "BK";
+			material_black_Q.name = "BQ";	
+			
+			
+			var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
+			
+			var material_white_p1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p3 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p4 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p5 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p6 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p7 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_p8 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			material_white_p1.name = "WP1";
+			material_white_p2.name = "WP2";
+			material_white_p3.name = "WP3"; 
+			material_white_p4.name = "WP4";
+			material_white_p5.name = "WP5"; 
+			material_white_p6.name = "WP6";
+			material_white_p7.name = "WP7";
+			material_white_p8.name = "WP8";
+				
+			
+			var material_white_k1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_k2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			material_white_k1.name = "Wk1";
+			material_white_k2.name = "Wk2";		
+			
+			var material_white_r1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_r2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			material_white_r1.name = "Wr1";
+			material_white_r2.name = "Wr2";	
+			
+			var material_white_b1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_b2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			material_white_b1.name = "Wb1";
+			material_white_b2.name = "Wb2";	
+			
+			var material_white_K = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			var material_white_Q = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			material_white_K.name = "WK";
+			material_white_Q.name = "WQ";	
+			
+			var material_white = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
+			
+			
+			
+			
+						
+			//var material_hold = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
 						
 			raycaster = new THREE.Raycaster();
 			
 			
-			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+			
 
-			function onDocumentMouseMove( event ) {
-
-				event.preventDefault();
-
-				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-			}
-
+			
 
 			
 			
@@ -318,13 +395,11 @@
                                                                    
 			var loader = new THREE.ColladaLoader();
 			scene = new THREE.Scene();
-			//scene.fog = new THREE.FogExp2( 0xaaccff, 0.0007 );	
-			scene.fog = new THREE.Fog( 0xffffff, 300, 1000 );
-			scene.fog.color.setHSL( 0.51, 0.6, 0.6 );
+			
 					
 			var sqArray = new Array()
 			                                                            
-                                                                   
+                                                                  
                                                                    
 
 			//var loader = new THREE.ColladaLoader();
@@ -337,14 +412,12 @@
 		
 		loader.load( 'chesspieces/king.dae', function ( collada ) { 		
 				daeKl = collada.scene;	
-				init();
-				animate();					
+								
 			});
 			
 		loader.load( 'chesspieces/king.dae', function ( collada ) { 
 				daeKd = collada.scene;	
-				init();
-				animate();					
+								
 			});
 			
 	
@@ -353,67 +426,58 @@
 			
 		loader.load( 'chesspieces/queen.dae', function ( collada ) {
 				daeQl = collada.scene;
-				init();
-				animate();
+				
 			} );
 			
 		loader.load( 'chesspieces/queen.dae', function ( collada ) {
 				daeQd = collada.scene;
-				init();
-				animate();
+				
 			} );
 			
 			
 		loader.load( 'chesspieces/knight.dae', function ( collada ) {
 				daek1l = collada.scene;	
-				init();
-				animate();
+				
 			} );
 	
 		loader.load( 'chesspieces/knight.dae', function ( collada ) {
 				daek2l = collada.scene;	
-				init();
-				animate();
+				
 			} );		
 			
 			
 		loader.load( 'chesspieces/knight.dae', function ( collada ) {
 				daek1d = collada.scene;	
-				init();
-				animate();
+				
 			} );
 			
 		loader.load( 'chesspieces/knight.dae', function ( collada ) {
 				daek2d = collada.scene;	
-				init();
-				animate();
+				init();  //  HAVE NO CLUE WHY I HAVE TO PUT THIS HERE.
+				
 			} );
 						
 			
 			
 		loader.load( 'chesspieces/rook.dae', function ( collada ) {
 				daeR1l = collada.scene;				
-				init();
-				animate();
+				
 			} );
 			
 		loader.load( 'chesspieces/rook.dae', function ( collada ) {
 				daeR2l = collada.scene;				
-				init();
-				animate();
+				
 			} );
 
 
 		loader.load( 'chesspieces/rook.dae', function ( collada ) {
 				daeR1d = collada.scene;				
-				init();
-				animate();
+				
 			} );
 			
 		loader.load( 'chesspieces/rook.dae', function ( collada ) {
 				daeR2d = collada.scene;				
-				init();
-				animate();
+				
 			} );
 
 
@@ -421,29 +485,25 @@
 		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
 				daeB1l = collada.scene;	
 							
-				init();
-				animate();
+				
 			} );
 	
 		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
 				daeB2l = collada.scene;	
 							
-				init();
-				animate();
+				
 			} );		
 	
 		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
 				daeB1d = collada.scene;	
 							
-				init();
-				animate();
+				
 			} );			
 	
 		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
 				daeB2d = collada.scene;	
 						
-				init();
-				animate();
+				
 			} );		
 			
 			
@@ -451,8 +511,7 @@
 			loader.load( 'chesspieces/pawn.dae', function ( collada ) {				
 			        daeP1l = collada.scene;		
 			               			        
-				init();
-				animate();
+				
 			} );
 			
 			
@@ -460,56 +519,49 @@
 			        daeP2l = collada.scene;				        			
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );		
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP3l = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP4l = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP5l = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP6l = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP7l = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP8l = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 	
@@ -520,8 +572,7 @@
 			        daeP1d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 			
@@ -529,56 +580,49 @@
 			        daeP2d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );		
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP3d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP4d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP5d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP6d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP7d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 			
 				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
 			        daeP8d = collada.scene;				
 			        //window.referenceModel = daeP.scene.children[0];
 			        //var refObject = window.referenceModel;			        
-				init();
-				animate();
+				
 			} );
 	
 	
@@ -633,7 +677,7 @@
 				scene.add( dae );
 				}
 
-
+			
 
 			var init = function() {
 
@@ -653,7 +697,8 @@
 				var size = 4, step = 1;
 
 				var geometry = new THREE.Geometry();
-				var material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+				var material = new THREE.LineBasicMaterial( { color: 0xFFFFFE } );
+				material.name = "grid";
 
 				for ( var i = - size; i <= size; i += step ) {
 
@@ -673,56 +718,53 @@
 				setSquares( -3.5 );				
 				setSquares( -2.5 );
 				
-				//var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
-				var material_white = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-				  
+				
 							
-				setDAE( daek1l, -2.5,3.5, material_white );
-				setDAE( daek2l,  2.5,3.5, material_white );	
+				setDAE( daek1l, -2.5,3.5, material_white_k1 );
+				setDAE( daek2l,  2.5,3.5, material_white_k2 );	
 					
-				setDAE( daeR1l, -3.5,3.5, material_white );
-				setDAE( daeR2l,  3.5,3.5, material_white );
-				daeR1l.userData = "d";
-				daeR2l.userData = "d";
+				setDAE( daeR1l, -3.5,3.5, material_white_r1 );
+				setDAE( daeR2l,  3.5,3.5, material_white_r2 );
 				
-				setDAE( daeB1l, -1.5,3.5, material_white );
-				setDAE( daeB2l,  1.5,3.5, material_white );
-				setDAE( daeQl,  -0.5,3.5, material_white );
-				setDAE( daeKl,   0.5,3.5, material_white );
 				
-				setDAE( daeP1l ,  3.5, 2.5, material_white );
-				setDAE( daeP2l ,  2.5, 2.5, material_white );
-				setDAE( daeP3l ,  1.5, 2.5, material_white );
-				setDAE( daeP4l ,  0.5, 2.5, material_white );
-				setDAE( daeP5l , -0.5, 2.5, material_white );
-				setDAE( daeP6l , -1.5, 2.5, material_white );
-				setDAE( daeP7l , -2.5, 2.5, material_white );
-				setDAE( daeP8l , -3.5, 2.5, material_white );
+				setDAE( daeB1l, -1.5,3.5, material_white_b1 );
+				setDAE( daeB2l,  1.5,3.5, material_white_b2 );
+				setDAE( daeQl,  -0.5,3.5, material_white_Q );
+				setDAE( daeKl,   0.5,3.5, material_white_K );
+				
+				setDAE( daeP1l ,  3.5, 2.5, material_white_p1 );
+				setDAE( daeP2l ,  2.5, 2.5, material_white_p2 );
+				setDAE( daeP3l ,  1.5, 2.5, material_white_p3 );
+				setDAE( daeP4l ,  0.5, 2.5, material_white_p4 );
+				setDAE( daeP5l , -0.5, 2.5, material_white_p5 );
+				setDAE( daeP6l , -1.5, 2.5, material_white_p6 );
+				setDAE( daeP7l , -2.5, 2.5, material_white_p7 );
+				setDAE( daeP8l , -3.5, 2.5, material_white_p8 );
 				
 	
 	//the dark side. 
 	
-				setDAE( daek1d, -2.5,-3.5, material_black );				
-				setDAE( daek2d, 2.5,-3.5,  material_black );	
+				setDAE( daek1d, -2.5,-3.5, material_black_k1 );				
+				setDAE( daek2d, 2.5,-3.5,  material_black_k2 );	
 					
-				setDAE( daeR1d, -3.5,-3.5, material_black );
-				setDAE( daeR2d, 3.5,-3.5,  material_black );
+				setDAE( daeR1d, -3.5,-3.5, material_black_r1 );
+				setDAE( daeR2d, 3.5,-3.5,  material_black_r2 );
 				daeR1d.userData = "d";
 				daeR2d.userData = "d";
 				
-				setDAE( daeB1d, -1.5,-3.5, material_black );
-				setDAE( daeB2d,  1.5,-3.5, material_black );
-				setDAE( daeQd,  -0.5,-3.5, material_black );
-				setDAE( daeKd,   0.5,-3.5, material_black );
+				setDAE( daeB1d, -1.5,-3.5, material_black_b1 );
+				setDAE( daeB2d,  1.5,-3.5, material_black_b2 );
+				setDAE( daeQd,  -0.5,-3.5, material_black_Q );
+				setDAE( daeKd,   0.5,-3.5, material_black_K );
 				
-				setDAE( daeP1d ,  3.5, -2.5, material_black );
-				setDAE( daeP2d ,  2.5, -2.5, material_black );
-				setDAE( daeP3d ,  1.5, -2.5, material_black );
-				setDAE( daeP4d ,  0.5, -2.5, material_black );
-				setDAE( daeP5d , -0.5, -2.5, material_black );
-				setDAE( daeP6d , -1.5, -2.5, material_black );
-				setDAE( daeP7d , -2.5, -2.5, material_black );
-				setDAE( daeP8d , -3.5, -2.5, material_black );
+				setDAE( daeP1d ,  3.5, -2.5, material_black_p1 );
+				setDAE( daeP2d ,  2.5, -2.5, material_black_p2 );
+				setDAE( daeP3d ,  1.5, -2.5, material_black_p3 );
+				setDAE( daeP4d ,  0.5, -2.5, material_black_p4 );
+				setDAE( daeP5d , -0.5, -2.5, material_black_p5 );
+				setDAE( daeP6d , -1.5, -2.5, material_black_p6 );
+				setDAE( daeP7d , -2.5, -2.5, material_black_p7 );
+				setDAE( daeP8d , -3.5, -2.5, material_black_p8 );
 	
 				
 				//var clone = new THREE.Mesh(  daeP1l.clone()  , material_black );
@@ -761,11 +803,16 @@
 				
 				
 
-				
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				//renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				window.addEventListener( 'resize', onWindowResize, false );
+				window.addEventListener( 'resize', onWindowResize, false );				
 
+				
+				
+			animate();
 			}
+
+			
 
 			function onWindowResize() {
 
@@ -775,24 +822,74 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
+			
 
-			//
+			function onDocumentMouseMove( event ) {
+
+				event.preventDefault();
+
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+			}
+
 
 			function animate() {
 
 				requestAnimationFrame( animate );
 
 				render();			
-				//stats.update();
+				
 
 			}
+
+  			
 
 			var clock = new THREE.Clock();
 
 			function render() {
 
 
-			raycaster.setFromCamera( mouse, camera );
+			//raycaster.setFromCamera( mouse, camera );
+			
+			
+			// find intersections
+				scene.updateMatrixWorld();
+				camera.updateMatrixWorld();
+				raycaster.setFromCamera( mouse, camera );
+				
+				var intersects = raycaster.intersectObjects( scene.children,true );
+
+				if ( intersects.length > 0 ) {
+				
+					SELECTED = intersects[ 0 ].object;
+
+					if ( INTERSECTED != intersects[ 0 ].object ) {
+
+						if ( INTERSECTED ) {
+						 INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+						}
+
+						INTERSECTED = intersects[ 0 ].object;
+						INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+						INTERSECTED.name = INTERSECTED.material.name;
+						if(INTERSECTED.name != "grid" ) { 
+						//console.log("PIECE: "+INTERSECTED.name );
+						game.infodata.innerHTML = " "+INTERSECTED.name+" " ;
+						INTERSECTED.material.color.setHex( 0xff0000 );
+   						}
+					}
+
+				} else {
+
+					if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+					INTERSECTED = null;
+
+				}
+
+			
+			
 			
 				
 
@@ -848,41 +945,10 @@
 				
 				camera.lookAt( scene.position );
 
-				var intersects = raycaster.intersectObjects( scene.children, true );
 				
 				
-				if ( intersects.length > 0 ) {				
 				
-					SELECTED = intersects[ 0 ].object;					
-
-					if ( INTERSECTED != intersects[ 0 ].object ) {					
-					console.log('intersect: ' + intersects[0].point.x.toFixed(2) + ', ' + intersects[0].point.y.toFixed(2) + ', ' + intersects[0].point.z.toFixed(2) + ')');
-}
-						
-						if ( INTERSECTED ) {												
-						        //save original mat
-						        //INTERSECTED.currentMat = INTERSECTED.material
-						         material_hold = SELECTED.material;
-						        //copyMaterial( SELECTED , material_hold );
-							//set new material
-						        setMaterial( INTERSECTED , new THREE.MeshBasicMaterial({color: 0xff0000}));		
-						                   }				
-						INTERSECTED = intersects[ 0 ].object;						
-						//setMaterial( INTERSECTED , new THREE.MeshBasicMaterial({color: 0xff0000}))
-
-					
-
-				 } else { 
-
-					//if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-					//if ( INTERSECTED ) setMaterial( SELECTED , new THREE.MeshBasicMaterial({color: 0x0000ff} ));
-					if ( INTERSECTED ) setMaterial( SELECTED , material_hold );	
-						
-					
-					//console.log( "NO INTERSECT" );
-					INTERSECTED = null;
-
-				}
+				
 				
 							
 
@@ -892,7 +958,7 @@
 				
 
 			}
-
+		
 		</script>
 	</body>
 </html>
