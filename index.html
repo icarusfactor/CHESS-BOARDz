@@ -239,6 +239,8 @@
     function createGame() {
       game = new Game(initial_time, 'infodata', 'player1clock', 'player2clock');
       game.resetClocks();
+      game.infodata.innerHTML = 'LOADING';
+      
     }
 
     function formatTime(tenths) {
@@ -360,10 +362,23 @@
     }
     
 	
-    
+     Game.prototype.addTime = function() {
+         game.player1.initial_time += 300;
+         game.player2.initial_time += 300;
+         game.resetClocks();
+     }
  
+   Game.prototype.removeTime = function() {
+   	if (this.player1.initial_time >= 600) {
+         game.player1.initial_time -= 300;
+         }
+         if (this.player2.initial_time >= 600) {
+         game.player2.initial_time -= 300;
+         }
+         game.resetClocks();
+     }
     
-    
+  
     
   </script>
 		
@@ -389,6 +404,8 @@
 	</tr>
 </table>
 
+     </div>			
+			
     
 
 		         
@@ -417,8 +434,16 @@
         <li><a href="javascript:setSpinCAM();">ROTATE</a></li>
         <li><a href="javascript:setBlackCAM();">BLACK 3/4</a></li>
         <li><a href="javascript:setWhiteCAM();">WHITE 3/4</a></li>
-        <li><a href="javascript:setTopCAM();">TOP</a></li>       
-        
+        <li><a href="javascript:setTopCAM();">TOP</a></li> 
+        </ul>
+    </li>
+    <li  style="float:right;list-style-type:none;"  ><a href="#">Action</a>
+        <ul class="main-nav-sub">
+        <li><a href="javascript:game.pause();">PAUSE</a></li>
+        <li><a href="javascript:game.addTime();">+ TIME</a></li>
+        <li><a href="javascript:game.removeTime();">- TIME</a></li>
+        <li><a href="javascript:game.resetClocks();">RESET CLOCKS</a></li>
+       
         </ul>
     </li>
     
@@ -427,8 +452,7 @@
 </nav>		
 	
 			
-			 </div>
-			
+			 </div>			
   			
     
 
@@ -443,6 +467,8 @@
 		<!-- <script src="js/libs/stats.min.js"></script>   -->
 
 		<script>
+
+ 			
 
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -460,10 +486,8 @@
 			var daeB1l,daeB2l , daeB1d, daeB2d;
 			var daeR1l,daeR2l , daeR1d , daeR2d;
 			var daeP1l ,daeP2l, daeP3l,daeP4l,daeP5l,daeP6l,daeP7l,daeP8l;
-			var daeP1d ,daeP2d, daeP3d,daeP4d,daeP5d,daeP6d,daeP7d,daeP8d;
-			
-			
-			
+			var daeP1d ,daeP2d, daeP3d,daeP4d,daeP5d,daeP6d,daeP7d,daeP8d;			
+					
 			
 			var material_black_p1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });		
 			var material_black_p2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
@@ -814,14 +838,15 @@
 	
 	
 			
-			
+		//Light Squares	
 		var setSquares = function( offset ) {		
 		   for ( var r = 0; r < 4; r++  ) {	
 		   for ( var i = 0; i < 4; i++  ) {
 			//Squares
 				var square_geometry = new THREE.BoxGeometry(500, 10, 500, 10, 0, 10 );
 				var square_material = new THREE.MeshBasicMaterial({color: 0xAAAAAA });
-				var square = new THREE.Mesh(square_geometry, square_material);
+				square_material.name = "SL"+r+"-"+i;
+				var square = new THREE.Mesh(square_geometry, square_material);				
 				square.scale.x = square.scale.y = square.scale.z = 0.002;
 				square.position.x = offset +( 2 * i);
 				square.position.y = 0;
@@ -831,7 +856,27 @@
 				}
 				}
 				
-				}		
+				}	
+		//Dark Squares	
+		var setSquaresD = function( offset , offset2 ) {		
+		   for ( var r = 0; r < 4; r++  ) {	
+		   for ( var i = 0; i < 4; i++  ) {
+			//Squares
+				var square_geometryD = new THREE.BoxGeometry(500, 10, 500, 10, 0, 10 );
+				var square_materialD = new THREE.MeshBasicMaterial({color: 0x333333 });
+				square_materialD.name = "SD"+r+"-"+i;
+				var squareD = new THREE.Mesh(square_geometryD, square_materialD);
+				squareD.scale.x = squareD.scale.y = squareD.scale.z = 0.002;
+				squareD.position.x = offset +( 2 * i)+offset2 ;
+				//squareD.position.x = offset +( 2 * i)-1.0;
+				squareD.position.y = 0;
+				squareD.position.z = offset +( 2 * r);
+				scene.add( squareD );
+				
+				}
+				}
+				
+				}			
 			
 			
 			var setSpinCAM = function() {	
@@ -901,14 +946,18 @@
 				scene.add( line );				
 				
 
-				// Add the COLLADA				
+				// Add the COLLADA							
 				setSquares( -3.5 );				
 				setSquares( -2.5 );
-				
+				setSquaresD( -3.5, 1.0 );				
+				setSquaresD( -2.5, -1.0 );
 				
 							
 				setDAE( daek1l, -2.5,3.5, material_white_k1 );
 				setDAE( daek2l,  2.5,3.5, material_white_k2 );	
+				//set rotation of knights toward center.
+				daek1l.rotateY( -30 );
+				daek2l.rotateY( -30 );
 					
 				setDAE( daeR1l, -3.5,3.5, material_white_r1 );
 				setDAE( daeR2l,  3.5,3.5, material_white_r2 );
@@ -933,12 +982,13 @@
 	
 				setDAE( daek1d, -2.5,-3.5, material_black_k1 );				
 				setDAE( daek2d, 2.5,-3.5,  material_black_k2 );	
+				//set rotation of knights toward center.
+				daek1d.rotateY( 30 );
+				daek2d.rotateY( 30 );
 					
 				setDAE( daeR1d, -3.5,-3.5, material_black_r1 );
 				setDAE( daeR2d, 3.5,-3.5,  material_black_r2 );
-				daeR1d.userData = "d";
-				daeR2d.userData = "d";
-				
+								
 				setDAE( daeB1d, -1.5,-3.5, material_black_b1 );
 				setDAE( daeB2d,  1.5,-3.5, material_black_b2 );
 				setDAE( daeQd,  -0.5,-3.5, material_black_Q );
@@ -1027,7 +1077,7 @@
 
 				render();			
 				
-
+				game.infodata.innerHTML = " ";
 			}
 
   			
