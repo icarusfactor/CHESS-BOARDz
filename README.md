@@ -17,7 +17,7 @@ DESIGN GUIDELINES:<BR>
 IRC:
 You can catch me online as user factor uisng<BR>
 an irc client asimov.freenode.net or web - http://webchat.freenode.net/ <BR>
-Chat Rooms #three.js #webgl ##chess<BR>
+Chat Rooms #three.js #webgl ##chess #blender<BR>
 <BR>
 Other sites and githubs used<BR>
 <BR>
