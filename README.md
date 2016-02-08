@@ -45,5 +45,5 @@ TODO:<BR>
  [ ] Record FEN moves for playback and download. <BR>
  [ ] Add AI player<BR>
  [ ] Add simple css progress bar<BR>
- [W] Convert bottom buttons to menu bar. <BR>
+ [X] Convert bottom buttons to menu bar. <BR>
  [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
