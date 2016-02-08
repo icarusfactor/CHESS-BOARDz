@@ -19,7 +19,7 @@ You can catch me online as user factor uisng<BR>
 an irc client asimov.freenode.net or web - http://webchat.freenode.net/ <BR>
 Chat Rooms #three.js #webgl ##chess<BR>
 <BR>
-Other sites and githubs used,BR>
+Other sites and githubs used<BR>
 <BR>
   CHESSBOARD.JS  http://chessboardjs.com  https://github.com/oakmac/chessboardjs/ <BR>
   THREE.JS  http://threejs.org/  https://github.com/mrdoob/three.js/ <BR>
