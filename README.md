@@ -25,6 +25,8 @@ Other sites and githubs used<BR>
   THREE.JS  http://threejs.org/  https://github.com/mrdoob/three.js/ <BR>
   CSS MENUBAR http://www.w3schools.com/css/css_navbar.asp <BR>
   CSS PROGRESSBAR https://css-tricks.com/css3-progress-bars/ <BR>
+  HTML5 audio API XM MOD player https://github.com/junghans-schneider/ModPlayer.js <BR>
+  
 <BR>
 TODO:<BR>
  [ ] Add Piece Selector <BR>
@@ -37,10 +39,11 @@ TODO:<BR>
  [ ] Remove pieces from chess board<BR>
  [ ] Limit piece selector to side that is active In Play<BR>
  [ ] Make Start Game Button Work. <BR>
- [ ] Add menu options for extending or reducing time for each side. <BR>
- [ ] Add menu option for Pause.<BR>
+ [W] Add menu options for extending or reducing time for each side. <BR>
+ [W] Add menu option for Pause.<BR>
  [ ] Remove selector for Rotate and Top mode. <BR>
  [ ] Record FEN moves for playback and download. <BR>
  [ ] Add AI player<BR>
  [ ] Add simple css progress bar<BR>
- [ ] Convert bottom buttons to menu bar. <BR>
+ [W] Convert bottom buttons to menu bar. <BR>
+ [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
