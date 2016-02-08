@@ -14,6 +14,18 @@ DESIGN GUIDELINES:<BR>
  *Keep this version of the game classical, any marjor <BR>
  variations can be forked off.<BR> 
 <BR>
+IRC:
+You can catch me online as user factor uisng<BR>
+an irc client asimov.freenode.net or web - http://webchat.freenode.net/ <BR>
+Chat Rooms #three.js #webgl ##chess<BR>
+<BR>
+Other sites and githubs used,BR>
+<BR>
+  CHESSBOARD.JS  http://chessboardjs.com  https://github.com/oakmac/chessboardjs/ <BR>
+  THREE.JS  http://threejs.org/  https://github.com/mrdoob/three.js/ <BR>
+  CSS MENUBAR http://www.w3schools.com/css/css_navbar.asp <BR>
+  CSS PROGRESSBAR https://css-tricks.com/css3-progress-bars/ <BR>
+<BR>
 TODO:<BR>
  [ ] Add Piece Selector <BR>
  [ ] Chess Board Squares and named positions.<BR>
