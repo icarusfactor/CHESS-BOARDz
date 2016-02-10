@@ -41,7 +41,7 @@ TODO:<BR>
  [ ] Record FEN moves for playback and download. <BR>
  [ ] Add AI player<BR>
  [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
- [ ] Separated main file into smallr files. 
+ [X] Separated main file into smallr files. 
  [ ] Fix init() location , so that it makes sense. 
  
  
