@@ -23,8 +23,6 @@ Other sites and githubs used<BR>
 <BR>
   CHESSBOARD.JS  http://chessboardjs.com  https://github.com/oakmac/chessboardjs/ <BR>
   THREE.JS  http://threejs.org/  https://github.com/mrdoob/three.js/ <BR>
-  CSS MENUBAR http://www.w3schools.com/css/css_navbar.asp <BR>
-  CSS PROGRESSBAR https://css-tricks.com/css3-progress-bars/ <BR>
   HTML5 audio API XM MOD player https://github.com/junghans-schneider/ModPlayer.js <BR>
   
 <BR>
