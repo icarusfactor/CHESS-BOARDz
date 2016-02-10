@@ -40,7 +40,7 @@ TODO:<BR>
  [ ] Add AI player<BR>
  [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
  [X] Separated main file into smaller files. <BR>
- [ ] Fix init() location , so that it makes sense. 
- [ ] Broke access to infodata top box , need to make global or class function. 
+ [ ] Fix init() location , so that it makes sense.<BR> 
+ [ ] Broke access to infodata top box , need to make global or class function. <BR>
  
  
