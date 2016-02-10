@@ -41,6 +41,6 @@ TODO:<BR>
  [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
  [X] Separated main file into smaller files. <BR>
  [ ] Fix init() location , so that it makes sense. 
- 
+ [ ] Broke access to infodata top box , need to make global or class function. 
  
  
