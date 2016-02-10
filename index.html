@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-        <script>var version="020716-2314"</script>
+        <script>var version="021016-0102"</script>
 	<head>
 		<title>CHESS BOARDz</title>
 		<meta http-equiv="cache-control" content="max-age=0" />
@@ -10,467 +10,90 @@
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				font-family: Monospace;
-				background-color: #505050;
-				margin: 0px;
-				overflow: hidden;
-			}
-			
-			/* Begin Style of Menus */
-			
-		        #main-nav > ul {
-		        list-style-type: none;
-		        padding: 0;
-		    	border: 1px solid #999;
-		    	position: absolute;
-		    	bottom: 10%;	
-			margin: 0;
-			padding: 0;						
-			background-color: #000000;	
-			display: block;
-		    	clear:both;
-		    	width: 100%; 
-			}
-    
-			#main-nav > ul  > li {
-		    	float: left;
-		    	background-color: #000;
-		    	border-right:1px solid #bbb;
-		    	
-			    }
-    
-			.main-nav-sub {
-		    	list-style-type: none;
-		    	padding: 0;
-		    	margin: 0;
-			    }
-    
-			#main-nav > ul  > li+li {
-		    	border-left: 1px solid #999;
-			    }
-    
-			.main-nav-sub > li  {
-		    	border-bottom: 1px solid #999;
-		    	border-right: 1px solid #999;
-		    	border-left: 1px solid #999;
-		    	background-color: #000;
-			    }
-    
-			.main-nav-sub > li:first-child {
-			border-top: 1px solid #999;
-			    }
-    
-			#main-nav > ul > li > a,
-		        .main-nav-sub > li > a {
-		    	text-decoration: none;
-		    	white-space: nowrap;
-		    	display: block;
-		    	color: #fff;
-		    	font-family: verdana, sans-serif;
-		    	font-size: .8em;
-		    	font-weight: bold;
-		    	padding: 2px 16px;
-		           }
-    
-			#main-nav > ul > li:hover > a {
-		    	color: #000;
-		    	background-color: #fff;
-			    }
-    
-			.main-nav-sub > li:hover > a {
-		    	color: #000;
-		    	background-color: #fff;
-			    }
-			    			        
-			/* NOTE: THIS IS WHERE THE DROP-DOWN BECOMES A DROP-UP */
-		      .main-nav-sub {
-			position: absolute;
-		    	bottom: 100%;
-		    	z-index: -999;
-		    	opacity: 0;
-			filter: alpha(opacity=0); /* IE older versions */
-			zoom: 1;  /* IE older versions */
-			    }
-    
-			#main-nav > ul > li:hover > .main-nav-sub {
-		    	z-index: 100;
-		    	opacity: 1;
-			filter: alpha(opacity=100); /* IE older versions */
-		       	zoom: 1;  /* IE older versions */
-    	
-		    	-webkit-transition: all .5s ease-in;
-		    	-moz-transition: all .5s ease-in;
-		    	-ms-transition: all .5s ease-in;
-		    	-o-transition: all .5s ease-in;
-		    	transition: all .5s ease-in;
-			    }
-			
-			
-			
-			
-			
-			/* End of Menu Styles */
-
-			#info {
-				color: #ffffff;
-				background: #000000;
-				position: absolute;
-				top: 0px;
-				width: 100%;
-				text-align: center;				
-				z-index: 100;
-				display:block;
-				font-size: 160%;
-				font-weight: bold;
-				font-family: "sans-serif", "arial", "courier", "Times New Roman", Georgia, Serif;
-                                         
-			}
-			
-			
-			   #player1clock {
-      				
-				float: left;
-				font-size: 320%;
-					  }
-			    #player2clock {
-				
-				float: right;
-				font-size: 320%;
-					  }
-			    .now_playing {
-			      border-bottom: .2em solid #aa0000;
-					 }
-			
-			
-			#status {
-				color: #ffffff;
-				background: #000000;
-				position: absolute;
-				bottom: 0px;
-				width: 100%;
-				text-align: center;
-				z-index: 100;
-				display:block;
-				font-size: 160%;
-				font-weight: bold;
-				font-family: "sans-serif", "arial", "courier", "Times New Roman", Georgia, Serif;
-
-			}
-			
-
-			a { color: skyblue }
-			
-			
-			/* Modal dialog box */
-			
-	.modalDialog {
-		position: fixed;
-		font-family: Arial, Helvetica, sans-serif;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		background: rgba(0,0,0,0.8);
-		z-index: 99999;
-		opacity:0;
-		-webkit-transition: opacity 400ms ease-in;
-		-moz-transition: opacity 400ms ease-in;
-		transition: opacity 400ms ease-in;
-		pointer-events: none;
-	}
-
-	.modalDialog:target {
-		opacity:1;
-		pointer-events: auto;
-	}
-
-	.modalDialog > div {
-		width: 400px;
-		position: relative;
-		margin: 10% auto;
-		padding: 5px 20px 13px 20px;
-		border-radius: 10px;
-		background: #fff;
-		background: -moz-linear-gradient(#fff, #999);
-		background: -webkit-linear-gradient(#fff, #999);
-		background: -o-linear-gradient(#fff, #999);
-	}
-
-	.close {
-		background: #606061;
-		color: #FFFFFF;
-		line-height: 25px;
-		position: absolute;
-		right: -12px;
-		text-align: center;
-		top: -10px;
-		width: 24px;
-		text-decoration: none;
-		font-weight: bold;
-		-webkit-border-radius: 12px;
-		-moz-border-radius: 12px;
-		border-radius: 12px;
-		-moz-box-shadow: 1px 1px 3px #000;
-		-webkit-box-shadow: 1px 1px 3px #000;
-		box-shadow: 1px 1px 3px #000;
-	}
-
-	.close:hover { background: #00d9ff; }
-			
-			
-		</style>
-	
-	
-	
-		
-		
-    <script>
-    var SPACEBAR = 32;
-    var ESCAPE = 27;
-    var ARROWS = function(key) {
-      return (key >= 37 && key <= 40) || (key >= 63232 && key <= 63235);
-    };
-
-    var initial_time = 10 * 60*5;
-    var game = null;
-
-    function createGame() {
-      game = new Game(initial_time, 'infodata', 'player1clock', 'player2clock');
-      game.resetClocks();
-      game.infodata.innerHTML = 'LOADING';
-      
-    }
-
-    function formatTime(tenths) {
-      var minutes = String(Math.floor(tenths/600));
-      var seconds = String(Math.floor(tenths/10) % 60);
-      if (seconds.length == 1) { seconds = '0' + seconds;}
-      var decimal = String(tenths % 10);
-  
-      // if we have no minutes, include tenths of a second
-      return (minutes != '0') ?
-        (minutes + ':' + seconds) :
-        (seconds + '.' + decimal);
-    }
-
-    function Player(clock_id, initial_time, game) {
-      this.clock = document.getElementById(clock_id);
-      this.initial_time = initial_time;
-      this.time = this.initial_time;
-      this.game = game;
-      this.opponent = null;
-    }
-    Player.prototype.play = function() {
-      var opponent = this.opponent;
-      var game = this.game;
-      if (!game.game_over) {
-        clearTimeout(game.timer_loop);
-        game.timer_loop = setInterval(function(){
-          opponent.time -= 1;
-          if (opponent.time == 0) {
-            clearTimeout(game.timer_loop);
-            game.game_over = true;
-            spin = 1; //switch to spin mode.
-            game.infodata.innerHTML = 'GAME OVER';
-            game.infodata.className = '';
-          }
-          else{  game.infodata.innerHTML = 'IN PLAY';   }
-          game.displayTimers();
-        }, 100);        
-        opponent.clock.className = 'now_playing';
-        this.clock.className = '';
-        game.infodata.className = 'hidden';
-      }
-    }
-
-    function Game(initial_time, info_id, p1_clock_id, p2_clock_id) {
-      this.infodata = document.getElementById(info_id);
-      this.player1 = new Player(p1_clock_id, initial_time, this);
-      this.player2 = new Player(p2_clock_id, initial_time, this);
-      this.player1.opponent = this.player2;
-      this.player2.opponent = this.player1;
-      this.timer_loop = null;
-      this.game_over = false;
-    }
-    // Dispatcher when we press a key
-    Game.prototype.keypress = function(e) {
-      var key = e.charCode || e.keyCode || 0;
-      var keychar = String.fromCharCode(key);
-      // left half of keyboard
-      if ('qwertasdfgzxcvb'.indexOf(keychar) != -1) {
-        spin = 3; //switch to black side. 
-        this.player1.play(); }
-      // right half of keyboard
-      else if (("yuiop[]\hjkl;'nm,./".indexOf(keychar) != -1)
-               || ARROWS(key)) {
-        spin = 2; //switch to white side
-        this.player2.play(); }
-      else if (key == SPACEBAR) {
-       		spin = 1; //switch to spin mode.	
-        	this.pause(); }
-      else if (key == ESCAPE) {
-        this.resetClocks(); }
-      else if ('=+'.indexOf(keychar) != -1) {
-        this.player1.initial_time += 300;
-        this.player2.initial_time += 300;
-        this.resetClocks(); }
-      else if ('-_'.indexOf(keychar) != -1) {
-        if (this.player1.initial_time >= 600) {
-          this.player1.initial_time -= 300;          
-        }
-        if (this.player2.initial_time >= 600) {
-          this.player2.initial_time -= 300;          
-        }
-        this.resetClocks();
-      }
-    }
-    Game.prototype.pause = function() {
-      if (!this.game_over) {
-        var infodata = this.infodata; 
-        infodata.innerHTML = 'PAUSED';
-        infodata.className = '';
-        clearTimeout(this.timer_loop);
-        this.timer_loop = setInterval(function(){
-          if (infodata.className == '') {
-            infodata.className = 'hidden';
-          }
-          else {
-            infodata.className = '';
-          }
-        }, 500);
-      }
-    }
-    // Show the timers
-    Game.prototype.displayTimers = function() {
-      this.player1.clock.innerHTML = formatTime(this.player1.time);
-      this.player2.clock.innerHTML = formatTime(this.player2.time);
-         
-    }
-    // Reset the clocks
-    Game.prototype.resetClocks = function() {
-      clearTimeout(this.timer_loop);
-      this.player1.clock.className = '';
-      this.player2.clock.className = '';
-      this.infodata.className = 'hidden';
-      this.player1.time = this.player1.initial_time;
-      this.player2.time = this.player2.initial_time;
-      this.game_over = false;
-      this.displayTimers();
-      game.infodata.innerHTML = ' ';  //clear status
-    }
-    
-	
-     Game.prototype.addTime = function() {
-         game.player1.initial_time += 300;
-         game.player2.initial_time += 300;
-         game.resetClocks();
-     }
- 
-   Game.prototype.removeTime = function() {
-   	if (this.player1.initial_time >= 600) {
-         game.player1.initial_time -= 300;
-         }
-         if (this.player2.initial_time >= 600) {
-         game.player2.initial_time -= 300;
-         }
-         game.resetClocks();
-     }
-    
-  
-    
-  </script>
-		
-		
+                <link rel="stylesheet" type="text/css" href="css/theme.css">	
 	</head>
-	<body style='' onkeypress='game.keypress(event)' onload='createGame();' >
-		<div id="info">		
-		
-		<table border="0" style="background-color:#000000;color:#FFFFFF;width:100%" cellpadding="3" cellspacing="1">
+	
+	<body style='' onkeypress='game.keypress(event)' onload='javascript:createGame();' >
+	
+	<div id="info">	
+	<table border="0" style="background-color:#000000;color:#FFFFFF;width:100%" cellpadding="3" cellspacing="1">
 	<tr>	
-		<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: left;width: 100%;line-height:100px;" type="button"  onclick="spin=3;game.player1.play();" >WHITE</button> </td>
-		<td rowspan="2" > <div id='player1clock'>0:00</div> </td>
-		<td><CENTER> <button style="background: white;" type="button">START GAME</button></CENTER></td>
-		<td rowspan="2" > <div id='player2clock'>0:00</div> </td>
-		<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: right;;width: 100%;heigth: 100%;line-height:100px;" type="button" onclick="spin=2;game.player2.play();" >BLACK</button> </td>
+	<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: left;width: 100%;line-height:100px;" type="button"  onclick="spin=3;game.player1.play();" >WHITE</button> </td>
+	<td rowspan="2" > <div id='player1clock'>0:00</div> </td>
+	<td><CENTER> <button style="background: white;" type="button">START GAME</button></CENTER></td>
+	<td rowspan="2" > <div id='player2clock'>0:00</div> </td>
+	<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: right;;width: 100%;heigth: 100%;line-height:100px;" type="button" onclick="spin=2;game.player2.play();" >BLACK</button> </td>
 	</tr>
 	<tr>
-		
-		
-		<td width="50%" ><CENTER> <div id='infodata' class='hidden'> </CENTER></div> </td>
-		
-		
+	<td width="50%" ><CENTER> <div id='infodata' class='hidden'> </CENTER></div> </td>
 	</tr>
-</table>
-
-     </div>			
+	</table>
+     	</div>			
 			
-    
+    	<script src="js/chesstimer.js"></script>
+    	<script src="js/three.min.js"></script>
+	<script src="js/loaders/collada/Animation.js"></script>
+	<script src="js/loaders/collada/AnimationHandler.js"></script>
+	<script src="js/loaders/collada/KeyFrameAnimation.js"></script>
+	<script src="js/loaders/ColladaLoader.js"></script>
+	<script src="js/Detector.js"></script>
 
 		         
-			 </div>			
-			<div id="openModal" class="modalDialog">
-			<div>
-			<a href="#close" title="Close" class="close">X</a>
-			<h2>About CHESS BOARDz</h2>
-			<p>Work In Progress : Game is not playable at this time.</p>
-			<p>Version: <script>document.write(version)</script></p>
-			<p>GITHUB:</p><p>https://github.com/icarusfactor/CHESS-BOARDz</p>
-			<p>Programmer: Daniel Yount aka icarus[factor] </p>
-			
-			</div>
-			
-</div>
+	</div>			
+	<div id="openModal" class="modalDialog">
+	<div>
+	<a href="#close" title="Close" class="close">X</a>
+	<h2>About CHESS BOARDz</h2>
+	<p>Work In Progress : Game is not playable at this time.</p>
+	<p>Version: <script>document.write(version)</script></p>
+	<p>GITHUB:</p><p>https://github.com/icarusfactor/CHESS-BOARDz</p>
+	<p>Programmer: Daniel Yount aka icarus[factor] </p>
+	</div>
+	</div>
+	
 			 
-			<div id="status">
+	<div id="status">
 			
 	<nav id="main-nav">
-<ul>   
-    <li><a href="javascript:location.reload();">CHESS BOARDz</a></li>   
-    <li  style="float:right;list-style-type:none;"  ><a href="#openModal">About</a></li>  
-    <li  style="float:right;list-style-type:none;"  ><a href="#">View</a>
+	<ul>   
+	    <li><a href="javascript:location.reload();">CHESS BOARDz</a></li>   
+	    <li  style="float:right;list-style-type:none;"  ><a href="#openModal">About</a></li>  
+	    <li  style="float:right;list-style-type:none;"  ><a href="#">View</a>
         <ul class="main-nav-sub">
-        <li><a href="javascript:setSpinCAM();">ROTATE</a></li>
-        <li><a href="javascript:setBlackCAM();">BLACK 3/4</a></li>
-        <li><a href="javascript:setWhiteCAM();">WHITE 3/4</a></li>
-        <li><a href="javascript:setTopCAM();">TOP</a></li> 
+	    <li><a href="javascript:setSpinCAM();">ROTATE</a></li>
+	    <li><a href="javascript:setBlackCAM();">BLACK 3/4</a></li>
+	    <li><a href="javascript:setWhiteCAM();">WHITE 3/4</a></li>
+	    <li><a href="javascript:setTopCAM();">TOP</a></li> 
         </ul>
-    </li>
-    <li  style="float:right;list-style-type:none;"  ><a href="#">Action</a>
+       	    </li>
+            <li  style="float:right;list-style-type:none;"  ><a href="#">Action</a>
         <ul class="main-nav-sub">
-        <li><a href="javascript:game.pause();">PAUSE</a></li>
-        <li><a href="javascript:game.addTime();">+ TIME</a></li>
-        <li><a href="javascript:game.removeTime();">- TIME</a></li>
-        <li><a href="javascript:game.resetClocks();">RESET CLOCKS</a></li>
+       	    <!-- <li><a href="javascript:init();">INIT</a></li> -->
+            <li><a href="javascript:game.pause();">PAUSE</a></li>
+            <li><a href="javascript:game.addTime();">+ TIME</a></li>
+            <li><a href="javascript:game.removeTime();">- TIME</a></li>
+            <li><a href="javascript:game.resetClocks();">RESET CLOCKS</a></li>
        
         </ul>
-    </li>
-    
-    
-</ul>
-</nav>		
+    	   </li>
+	</ul>
+	</nav>		
 	
-			
-			 </div>			
+	</div>			
   			
     
 
-		<script src="js/three.min.js"></script>
-		<script src="js/loaders/collada/Animation.js"></script>
-		<script src="js/loaders/collada/AnimationHandler.js"></script>
-		<script src="js/loaders/collada/KeyFrameAnimation.js"></script>
+		
 
-		<script src="js/loaders/ColladaLoader.js"></script>
-
-		<script src="js/Detector.js"></script>         
-		<!-- <script src="js/libs/stats.min.js"></script>   -->
-
+		<script>  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();</script>
+		
+		<script src="js/init.js"></script>
+		<!-- init() is hiding in here. the only way i could get it to work.  -->
+		<script src="js/colladapieces.js"></script>
+		<script src="js/colladamaterials.js"></script>
+		<script src="js/chessboardparts.js"></script>
+		
 		<script>
-
- 			
-
-			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 			
 			var container;
@@ -480,577 +103,12 @@
 			
 			var mouse = new THREE.Vector2(), INTERSECTED,SELECTED;
 			
-			var dae;
-			var daeKl,daeKd,daeQl,daeQd;
-			var daek1l,daek2l, daek1d,daek2d;
-			var daeB1l,daeB2l , daeB1d, daeB2d;
-			var daeR1l,daeR2l , daeR1d , daeR2d;
-			var daeP1l ,daeP2l, daeP3l,daeP4l,daeP5l,daeP6l,daeP7l,daeP8l;
-			var daeP1d ,daeP2d, daeP3d,daeP4d,daeP5d,daeP6d,daeP7d,daeP8d;			
-					
-			
-			var material_black_p1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });		
-			var material_black_p2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
-			var material_black_p3 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
-			var material_black_p4 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
-			var material_black_p5 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			var material_black_p6 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
-			var material_black_p7 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
-			var material_black_p8 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_p1.name = "BP1";
-			material_black_p2.name = "BP2";
-			material_black_p3.name = "BP3"; 
-			material_black_p4.name = "BP4";
-			material_black_p5.name = "BP5"; 
-			material_black_p6.name = "BP6";
-			material_black_p7.name = "BP7";
-			material_black_p8.name = "BP8";
-			
-			var material_black_k1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			var material_black_k2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_k1.name = "Bk1";
-			material_black_k2.name = "Bk2";			
-			
-			var material_black_r1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			var material_black_r2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_r1.name = "Br1";
-			material_black_r2.name = "Br2";	
-			
-			
-			var material_black_b1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			var material_black_b2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_b1.name = "Bb1";
-			material_black_b2.name = "Bb2";	
 						
-			var material_black_K = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			var material_black_Q = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_K.name = "BK";
-			material_black_Q.name = "BQ";	
+			raycaster = new THREE.Raycaster();	
+			var clock = new THREE.Clock();
 			
 			
-			var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
 			
-			var material_white_p1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p3 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p4 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p5 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p6 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p7 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_p8 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_p1.name = "WP1";
-			material_white_p2.name = "WP2";
-			material_white_p3.name = "WP3"; 
-			material_white_p4.name = "WP4";
-			material_white_p5.name = "WP5"; 
-			material_white_p6.name = "WP6";
-			material_white_p7.name = "WP7";
-			material_white_p8.name = "WP8";
-				
-			
-			var material_white_k1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_k2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_k1.name = "Wk1";
-			material_white_k2.name = "Wk2";		
-			
-			var material_white_r1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_r2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_r1.name = "Wr1";
-			material_white_r2.name = "Wr2";	
-			
-			var material_white_b1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_b2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_b1.name = "Wb1";
-			material_white_b2.name = "Wb2";	
-			
-			var material_white_K = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			var material_white_Q = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_K.name = "WK";
-			material_white_Q.name = "WQ";	
-			
-			var material_white = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			
-			
-			
-			
-						
-			//var material_hold = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
-						
-			raycaster = new THREE.Raycaster();
-			
-			
-			
-
-			
-
-			
-			
-			//setMaterial(dae, new THREE.MeshBasicMaterial({color: 0xff0000}));
-			var setMaterial = function(node, material) {
-                           node.material = material;
-                           if (node.children) {
-                           for (var i = 0; i < node.children.length; i++) {
-                           setMaterial(node.children[i], material);
-                           }
-                                              }
-                                                                   }
-                                                                   
-                                                                   
-                                                                   
-                        var copytMaterial = function(node, materialto ) {
-                           materialto = node.material;                          
-                                                                   }    
-                                                                                                      
-                                                                   
-                            
-                                                                   
-			var loader = new THREE.ColladaLoader();
-			scene = new THREE.Scene();
-			
-					
-			var sqArray = new Array()
-			                                                            
-                                                                  
-                                                                   
-
-			//var loader = new THREE.ColladaLoader();
-			//loader.options.convertUpAxis = true;
-			
-	
-	        
-	
-	
-		
-		loader.load( 'chesspieces/king.dae', function ( collada ) { 		
-				daeKl = collada.scene;	
-								
-			});
-			
-		loader.load( 'chesspieces/king.dae', function ( collada ) { 
-				daeKd = collada.scene;	
-								
-			});
-			
-	
-			
-			
-			
-		loader.load( 'chesspieces/queen.dae', function ( collada ) {
-				daeQl = collada.scene;
-				
-			} );
-			
-		loader.load( 'chesspieces/queen.dae', function ( collada ) {
-				daeQd = collada.scene;
-				
-			} );
-			
-			
-		loader.load( 'chesspieces/knight.dae', function ( collada ) {
-				daek1l = collada.scene;	
-				
-			} );
-	
-		loader.load( 'chesspieces/knight.dae', function ( collada ) {
-				daek2l = collada.scene;	
-				
-			} );		
-			
-			
-		loader.load( 'chesspieces/knight.dae', function ( collada ) {
-				daek1d = collada.scene;	
-				
-			} );
-			
-		loader.load( 'chesspieces/knight.dae', function ( collada ) {
-				daek2d = collada.scene;	
-				init();  //  HAVE NO CLUE WHY I HAVE TO PUT THIS HERE.
-				
-			} );
-						
-			
-			
-		loader.load( 'chesspieces/rook.dae', function ( collada ) {
-				daeR1l = collada.scene;				
-				
-			} );
-			
-		loader.load( 'chesspieces/rook.dae', function ( collada ) {
-				daeR2l = collada.scene;				
-				
-			} );
-
-
-		loader.load( 'chesspieces/rook.dae', function ( collada ) {
-				daeR1d = collada.scene;				
-				
-			} );
-			
-		loader.load( 'chesspieces/rook.dae', function ( collada ) {
-				daeR2d = collada.scene;				
-				
-			} );
-
-
-			
-		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
-				daeB1l = collada.scene;	
-							
-				
-			} );
-	
-		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
-				daeB2l = collada.scene;	
-							
-				
-			} );		
-	
-		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
-				daeB1d = collada.scene;	
-							
-				
-			} );			
-	
-		loader.load( 'chesspieces/bishop.dae', function ( collada ) {
-				daeB2d = collada.scene;	
-						
-				
-			} );		
-			
-			
-			
-			loader.load( 'chesspieces/pawn.dae', function ( collada ) {				
-			        daeP1l = collada.scene;		
-			               			        
-				
-			} );
-			
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP2l = collada.scene;				        			
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );		
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP3l = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP4l = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP5l = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP6l = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP7l = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP8l = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-	
-	
-	//dark side pawns
-	
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP1d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP2d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );		
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP3d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP4d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP5d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP6d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP7d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-			
-				loader.load( 'chesspieces/pawn.dae', function ( collada ) {
-			        daeP8d = collada.scene;				
-			        //window.referenceModel = daeP.scene.children[0];
-			        //var refObject = window.referenceModel;			        
-				
-			} );
-	
-	
-			
-		//Light Squares	
-		var setSquares = function( offset ) {		
-		   for ( var r = 0; r < 4; r++  ) {	
-		   for ( var i = 0; i < 4; i++  ) {
-			//Squares
-				var square_geometry = new THREE.BoxGeometry(500, 10, 500, 10, 0, 10 );
-				var square_material = new THREE.MeshBasicMaterial({color: 0xAAAAAA });
-				square_material.name = "SL"+r+"-"+i;
-				var square = new THREE.Mesh(square_geometry, square_material);				
-				square.scale.x = square.scale.y = square.scale.z = 0.002;
-				square.position.x = offset +( 2 * i);
-				square.position.y = 0;
-				square.position.z = offset +( 2 * r);
-				scene.add( square );
-				
-				}
-				}
-				
-				}	
-		//Dark Squares	
-		var setSquaresD = function( offset , offset2 ) {		
-		   for ( var r = 0; r < 4; r++  ) {	
-		   for ( var i = 0; i < 4; i++  ) {
-			//Squares
-				var square_geometryD = new THREE.BoxGeometry(500, 10, 500, 10, 0, 10 );
-				var square_materialD = new THREE.MeshBasicMaterial({color: 0x333333 });
-				square_materialD.name = "SD"+r+"-"+i;
-				var squareD = new THREE.Mesh(square_geometryD, square_materialD);
-				squareD.scale.x = squareD.scale.y = squareD.scale.z = 0.002;
-				squareD.position.x = offset +( 2 * i)+offset2 ;
-				//squareD.position.x = offset +( 2 * i)-1.0;
-				squareD.position.y = 0;
-				squareD.position.z = offset +( 2 * r);
-				scene.add( squareD );
-				
-				}
-				}
-				
-				}			
-			
-			
-			var setSpinCAM = function() {	
-				spin = 1;				
-				}
-			
-				
-			var setWhiteCAM = function() {	
-				spin = 2;								
-				}
-				
-				
-			var setBlackCAM = function() {	
-				spin = 3;  				
-				}	
-				
-			
-			var setTopCAM = function() {
-				spin = 4;			
-				}
-			
-				
-			var setDAE = function( dae , daex , daez , daecolor ) {	
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.002;
-				dae.position.x = daex;    //default 1.0
-				dae.position.y = 0.0
-				dae.position.z = daez;    // default 1.0	
-				setMaterial(dae, daecolor );
-				dae.updateMatrix();				
-				scene.add( dae );
-				}
-
-			
-
-			var init = function() {
-
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1500 );
-				camera.position.set( 3, 3, 3 );
-
-				//setTopCAM();
-				
-				spin = 1; //switch to spin mode.
-
-       				
-				
-				// Grid
-				var size = 4, step = 1;
-
-				var geometry = new THREE.Geometry();
-				var material = new THREE.LineBasicMaterial( { color: 0xFFFFFE } );
-				material.name = "grid";
-
-				for ( var i = - size; i <= size; i += step ) {
-
-					geometry.vertices.push( new THREE.Vector3( - size, - 0.04, i ) );
-					geometry.vertices.push( new THREE.Vector3(   size, - 0.04, i ) );
-
-					geometry.vertices.push( new THREE.Vector3( i, - 0.04, - size ) );
-					geometry.vertices.push( new THREE.Vector3( i, - 0.04,   size ) );
-
-				}
-
-				var line = new THREE.LineSegments( geometry, material );
-				scene.add( line );				
-				
-
-				// Add the COLLADA							
-				setSquares( -3.5 );				
-				setSquares( -2.5 );
-				setSquaresD( -3.5, 1.0 );				
-				setSquaresD( -2.5, -1.0 );
-				
-							
-				setDAE( daek1l, -2.5,3.5, material_white_k1 );
-				setDAE( daek2l,  2.5,3.5, material_white_k2 );	
-				//set rotation of knights toward center.
-				daek1l.rotateY( -30 );
-				daek2l.rotateY( -30 );
-					
-				setDAE( daeR1l, -3.5,3.5, material_white_r1 );
-				setDAE( daeR2l,  3.5,3.5, material_white_r2 );
-				
-				
-				setDAE( daeB1l, -1.5,3.5, material_white_b1 );
-				setDAE( daeB2l,  1.5,3.5, material_white_b2 );
-				setDAE( daeQl,  -0.5,3.5, material_white_Q );
-				setDAE( daeKl,   0.5,3.5, material_white_K );
-				
-				setDAE( daeP1l ,  3.5, 2.5, material_white_p1 );
-				setDAE( daeP2l ,  2.5, 2.5, material_white_p2 );
-				setDAE( daeP3l ,  1.5, 2.5, material_white_p3 );
-				setDAE( daeP4l ,  0.5, 2.5, material_white_p4 );
-				setDAE( daeP5l , -0.5, 2.5, material_white_p5 );
-				setDAE( daeP6l , -1.5, 2.5, material_white_p6 );
-				setDAE( daeP7l , -2.5, 2.5, material_white_p7 );
-				setDAE( daeP8l , -3.5, 2.5, material_white_p8 );
-				
-	
-	//the dark side. 
-	
-				setDAE( daek1d, -2.5,-3.5, material_black_k1 );				
-				setDAE( daek2d, 2.5,-3.5,  material_black_k2 );	
-				//set rotation of knights toward center.
-				daek1d.rotateY( 30 );
-				daek2d.rotateY( 30 );
-					
-				setDAE( daeR1d, -3.5,-3.5, material_black_r1 );
-				setDAE( daeR2d, 3.5,-3.5,  material_black_r2 );
-								
-				setDAE( daeB1d, -1.5,-3.5, material_black_b1 );
-				setDAE( daeB2d,  1.5,-3.5, material_black_b2 );
-				setDAE( daeQd,  -0.5,-3.5, material_black_Q );
-				setDAE( daeKd,   0.5,-3.5, material_black_K );
-				
-				setDAE( daeP1d ,  3.5, -2.5, material_black_p1 );
-				setDAE( daeP2d ,  2.5, -2.5, material_black_p2 );
-				setDAE( daeP3d ,  1.5, -2.5, material_black_p3 );
-				setDAE( daeP4d ,  0.5, -2.5, material_black_p4 );
-				setDAE( daeP5d , -0.5, -2.5, material_black_p5 );
-				setDAE( daeP6d , -1.5, -2.5, material_black_p6 );
-				setDAE( daeP7d , -2.5, -2.5, material_black_p7 );
-				setDAE( daeP8d , -3.5, -2.5, material_black_p8 );
-	
-				
-				//var clone = new THREE.Mesh(  daeP1l.clone()  , material_black );
-				//clone.position.set(0,1,0);				
-				//setMaterial(dae, daecolor );
-				//clone.updateMatrix();				
-				//scene.add( clone );
-				//setDAE( clone , 0, 0, material_black );
-				
-						
-				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
-				scene.add( particleLight );
-
-				// Lights
-
-				scene.add( new THREE.AmbientLight( 0x888888 ) );
-
-				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xaaaaaa );
-				directionalLight.position.x = Math.random() - 0.5;
-				directionalLight.position.y = Math.random() - 0.5;
-				directionalLight.position.z = Math.random() - 0.5;
-				directionalLight.position.normalize();
-				scene.add( directionalLight );
-
-				var pointLight = new THREE.PointLight( 0x555555, 4 );
-				particleLight.add( pointLight );
-
-				renderer = new THREE.WebGLRenderer(  { antialias: true }  );
-				renderer.setClearColor( 0x5d5d5d );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				//renderer.shadowMap.enabled = true;
-				//renderer.shadowMap.type = THREE.PCFShadowMap;
-				
-				container.appendChild( renderer.domElement );			
-				
-				
-
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				//renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				window.addEventListener( 'resize', onWindowResize, false );				
-
-				
-				
-			animate();
-			}
-
-			
-
 			function onWindowResize() {
 
 				camera.aspect = window.innerWidth / window.innerHeight;
@@ -1069,28 +127,77 @@
 				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 			}
-
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				render();			
+			
+			
+			
+			
+			var setSpinCAM = function() {	
+				spin = 1;	
 				
-				game.infodata.innerHTML = " ";
-			}
+				//Roate around board
+				var timer = Date.now() * 0.0005;
+				camera.position.x = Math.cos( timer ) * 10;
+				camera.position.y = 7.5;
+				camera.position.z = Math.sin( timer ) * 10;
+				
 
-  			
-
-			var clock = new THREE.Clock();
-
-			function render() {
-
-
-			//raycaster.setFromCamera( mouse, camera );
+				
+				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
+				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
+				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+				
+							
+				}
 			
+				
+			var setWhiteCAM = function() {	
+				spin = 2;	
+				
+				//White position
+				camera.position.x = 6;
+				camera.position.y = 7.5;
+				camera.position.z = 10;
+				
+				particleLight.position.x = -3009;
+				particleLight.position.y = 4000;
+				particleLight.position.z = -3009;	
+											
+				}
+				
+				
+			var setBlackCAM = function() {	
+				spin = 3;  
+								 
+				 //Black position
+				camera.position.x = 6;
+				camera.position.y = 7.5;
+				camera.position.z = -10;
+				
+				particleLight.position.x = 3009;
+				particleLight.position.y = 4000;
+				particleLight.position.z = 3009;
+				
+								
+				}	
+				
 			
-			// find intersections
+			var setTopCAM = function() {
+				spin = 4;	
+				
+				//Top position			        
+				camera.position.x = 0;
+				camera.position.y = 15;
+				camera.position.z = 0;
+				
+				particleLight.position.x = 0;
+				particleLight.position.y = 25000;
+				particleLight.position.z = 0;
+						
+				}
+			
+
+			var findIntersections = function () {
+				// find intersections
 				scene.updateMatrixWorld();
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );
@@ -1125,77 +232,31 @@
 
 				}
 
+
+				 } //end of findIntersections
 			
 			
+
+			function render() {
 			
-				
+			
+			      findIntersections();
 
                               if( spin == 1 ){
+                              	//Roate around board                              	
+                              	setSpinCAM();				
+				}		
 
-
-				//Roate around board
-				var timer = Date.now() * 0.0005;
-				camera.position.x = Math.cos( timer ) * 10;
-				camera.position.y = 7.5;
-				camera.position.z = Math.sin( timer ) * 10;
-				
-				//game.infodata.innerHTML = camera.position.x;
-				
-				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
-				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
-				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
-				}
-				
-			      if( spin == 2 ){
-				//White position
-				camera.position.x = 6;
-				camera.position.y = 7.5;
-				camera.position.z = 10;
-				
-				particleLight.position.x = -3009;
-				particleLight.position.y = 4000;
-				particleLight.position.z = -3009;				  
-				  }
-				
-				 if( spin == 3 ){
-				 //Black position
-				camera.position.x = 6;
-				camera.position.y = 7.5;
-				camera.position.z = -10;
-				
-				particleLight.position.x = 3009;
-				particleLight.position.y = 4000;
-				particleLight.position.z = 3009;
-				 }
-				
-				
-				 if( spin == 4 ){
-				//Top position			        
-				camera.position.x = 0;
-				camera.position.y = 15;
-				camera.position.z = 0;
-				
-				particleLight.position.x = 0;
-				particleLight.position.y = 25000;
-				particleLight.position.z = 0;
-				 }
 				
 				camera.lookAt( scene.position );
-
-				
-				
-				
-				
-				
-							
 
 				THREE.AnimationHandler.update( clock.getDelta() );
 
 				renderer.render( scene, camera );
-				
-
 			}
-		
-		</script>
+			
+		 init();  //  HAVE NO CLUE WHY IT DOES NOT WORK HERE.	
+	</script>
+	
 	</body>
 </html>
