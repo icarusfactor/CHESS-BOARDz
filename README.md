@@ -29,21 +29,20 @@ Other sites and githubs used<BR>
   
 <BR>
 TODO:<BR>
- [ ] Add Piece Selector <BR>
- [X] Chess Board Squares and named positions.<BR>
+ [W] Add Piece Selector <BR>
  [ ] "infodata" status will have piece name while IN PLAY. <BR>
  [ ] Integrate modified chessboard.js to insert and get FEN data.<BR>
  [ ] Add letters and numbers to side of board that match FEN positions. <BR>
- [X] Rotate knight pieces toward center of board.<BR>
  [ ] Move pieces to sqaures on chess board.<BR>
  [ ] Remove pieces from chess board<BR>
  [ ] Limit piece selector to side that is active In Play<BR>
  [ ] Make Start Game Button Work. <BR>
- [X] Add menu options for extending or reducing time for each side. <BR>
- [X] Add menu option for Pause.<BR>
  [ ] Remove selector for Rotate and Top mode. <BR>
  [ ] Record FEN moves for playback and download. <BR>
  [ ] Add AI player<BR>
- [X] Add simple css loading status<BR>
- [X] Convert bottom buttons to menu bar. <BR>
  [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
+ [ ] Separated main file into smallr files. 
+ [ ] Fix init() location , so that it makes sense. 
+ 
+ 
+ 
