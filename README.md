@@ -27,7 +27,8 @@ Other sites and githubs used<BR>
   
 <BR>
 TODO:<BR>
- [W] Add Piece Selector <BR>
+ [X] Add Piece Selector <BR>
+ [ ] Add Square Selector<BR>
  [ ] "infodata" status will have piece name while IN PLAY. <BR>
  [ ] Integrate modified chessboard.js to insert and get FEN data.<BR>
  [ ] Add letters and numbers to side of board that match FEN positions. <BR>
