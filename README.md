@@ -13,6 +13,7 @@ DESIGN GUIDELINES:<BR>
  convert it into a CSS element, so it can be trafered easily with script. <BR>
  *Keep this version of the game classical, any marjor <BR>
  variations can be forked off.<BR> 
+ Had to genereate the squares after pieces inside init(), order of operation made it work.<BR>  
 <BR>
 IRC:
 You can catch me online as user factor uisng<BR>
@@ -43,5 +44,11 @@ TODO:<BR>
  [X] Separated main file into smaller files. <BR>
  [ ] Fix init() location , so that it makes sense.<BR> 
  [ ] Broke access to infodata top box , need to make global or class function. <BR>
+ [ ] Show options the piece can move once selected.
+ [ ] Animate / make draggable a selected piece. 
+ [ ] Once mouse up event detected on draggable object,make sure location is within chess rules.Else revert back.<BR>
+ [ ] Once selected make no other object selectable until same object selected again.
+ [ ] Once object selected make squares selectable. 
+ 
  
  
