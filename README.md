@@ -44,11 +44,11 @@ TODO:<BR>
  [X] Separated main file into smaller files. <BR>
  [ ] Fix init() location , so that it makes sense.<BR> 
  [ ] Broke access to infodata top box , need to make global or class function. <BR>
- [ ] Show options the piece can move once selected.
- [ ] Animate / make draggable a selected piece. 
+ [ ] Show options the piece can move once selected.<BR>
+ [ ] Animate / make draggable a selected piece. <BR>
  [ ] Once mouse up event detected on draggable object,make sure location is within chess rules.Else revert back.<BR>
- [ ] Once selected make no other object selectable until same object selected again.
- [ ] Once object selected make squares selectable. 
+ [ ] Once selected make no other object selectable until same object selected again.<BR>
+ [ ] Once object selected make squares selectable. <BR>
  
  
  
