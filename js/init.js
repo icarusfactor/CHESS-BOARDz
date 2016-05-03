@@ -1,15 +1,18 @@
-	
+	var version_init="050116_0223";
+
 	function animate() {
 
 				requestAnimationFrame( animate );
 
 				render();			
 				
-				game.infodata.innerHTML = " ";
+				//chessgame.infodata.innerHTML = " ";
 			}
 
 	
 			var init = function() {
+
+				console.log("INIT() STARTED");
 
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
@@ -21,77 +24,82 @@
 				
 				spin = 1; //switch to spin mode.
 
-				
-				scene.add( line );				
+					
+					
+								
+					
 				
 
-				// Add the COLLADA							
-				setSquares( -3.5 );				
-				setSquares( -2.5 );
-				setSquaresD( -3.5, 1.0 );				
-				setSquaresD( -2.5, -1.0 );
+										
+				setSquares( -3.5 ,"1");				
+				setSquares( -2.5 ,"2");
+				setSquaresD( -3.5, 1.0, "1" );				
+				setSquaresD( -2.5, -1.0,"2" );
 				
+				
+				console.log("INIT() ALMOST ALMOST ALMOST ENDED");
 							
-				setDAE( daek1l, -2.5,3.5, material_white_k1 );
-				setDAE( daek2l,  2.5,3.5, material_white_k2 );	
+				setDAE( knight[0], material_white_k1 );
+				setDAE( knight[1], material_white_k2 );	
 				//set rotation of knights toward center.
-				daek1l.rotateY( -30 );
-				daek2l.rotateY( -30 );
+				knight[0].rotateY( -30 );
+				knight[1].rotateY( -30 );
 					
-				setDAE( daeR1l, -3.5,3.5, material_white_r1 );
-				setDAE( daeR2l,  3.5,3.5, material_white_r2 );
+				setDAE( rook[0], material_white_r1 );
+				setDAE( rook[1], material_white_r2 );
 				
 				
-				setDAE( daeB1l, -1.5,3.5, material_white_b1 );
-				setDAE( daeB2l,  1.5,3.5, material_white_b2 );
-				setDAE( daeQl,  -0.5,3.5, material_white_Q );
-				setDAE( daeKl,   0.5,3.5, material_white_K );
+				setDAE( bishop[0], material_white_b1 );
+				setDAE( bishop[1], material_white_b2 );
+				setDAE( queen[0],  material_white_Q );
+				setDAE( king[0],   material_white_K );
 				
-				setDAE( daeP1l ,  3.5, 2.5, material_white_p1 );
-				setDAE( daeP2l ,  2.5, 2.5, material_white_p2 );
-				setDAE( daeP3l ,  1.5, 2.5, material_white_p3 );
-				setDAE( daeP4l ,  0.5, 2.5, material_white_p4 );
-				setDAE( daeP5l , -0.5, 2.5, material_white_p5 );
-				setDAE( daeP6l , -1.5, 2.5, material_white_p6 );
-				setDAE( daeP7l , -2.5, 2.5, material_white_p7 );
-				setDAE( daeP8l , -3.5, 2.5, material_white_p8 );
+				setDAE( pawns[0] , material_white_p1 );
+				setDAE( pawns[1] , material_white_p2 );
+				setDAE( pawns[2] , material_white_p3 );
+				setDAE( pawns[3] , material_white_p4 );
+				setDAE( pawns[4] , material_white_p5 );
+				setDAE( pawns[5] , material_white_p6 );
+				setDAE( pawns[6] , material_white_p7 );
+				setDAE( pawns[7] , material_white_p8 );
 				
 	
-	//the dark side. 
+	//the dark side. 	
 	
-				setDAE( daek1d, -2.5,-3.5, material_black_k1 );				
-				setDAE( daek2d, 2.5,-3.5,  material_black_k2 );	
+				setDAE( knight[2], material_black_k1 );				
+				setDAE( knight[3], material_black_k2 );	
 				//set rotation of knights toward center.
-				daek1d.rotateY( 30 );
-				daek2d.rotateY( 30 );
+				knight[2].rotateY( 30 );
+				knight[3].rotateY( 30 );
 					
-				setDAE( daeR1d, -3.5,-3.5, material_black_r1 );
-				setDAE( daeR2d, 3.5,-3.5,  material_black_r2 );
+				setDAE( rook[2], material_black_r1 );
+				setDAE( rook[3], material_black_r2 );
 								
-				setDAE( daeB1d, -1.5,-3.5, material_black_b1 );
-				setDAE( daeB2d,  1.5,-3.5, material_black_b2 );
-				setDAE( daeQd,  -0.5,-3.5, material_black_Q );
-				setDAE( daeKd,   0.5,-3.5, material_black_K );
+				setDAE( bishop[2], material_black_b1 );
+				setDAE( bishop[3], material_black_b2 );
+				setDAE( queen[1],  material_black_Q );
+				setDAE( king[1],   material_black_K );
 				
-				setDAE( daeP1d ,  3.5, -2.5, material_black_p1 );
-				setDAE( daeP2d ,  2.5, -2.5, material_black_p2 );
-				setDAE( daeP3d ,  1.5, -2.5, material_black_p3 );
-				setDAE( daeP4d ,  0.5, -2.5, material_black_p4 );
-				setDAE( daeP5d , -0.5, -2.5, material_black_p5 );
-				setDAE( daeP6d , -1.5, -2.5, material_black_p6 );
-				setDAE( daeP7d , -2.5, -2.5, material_black_p7 );
-				setDAE( daeP8d , -3.5, -2.5, material_black_p8 );
+				setDAE( pawns[8 ] ,  material_black_p1 );
+				setDAE( pawns[9 ] ,  material_black_p2 );
+				setDAE( pawns[10] ,  material_black_p3 );
+				setDAE( pawns[11] ,  material_black_p4 );
+				setDAE( pawns[12] ,  material_black_p5 );
+				setDAE( pawns[13] ,  material_black_p6 );
+				setDAE( pawns[14] ,  material_black_p7 );
+				setDAE( pawns[15] ,  material_black_p8 );
 	
 				
+				console.log("INIT() ALMOST ALMOST ENDED");
 				
-				
-						
+
+
 				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
 				scene.add( particleLight );
 
 				// Lights
 
-				scene.add( new THREE.AmbientLight( 0x888888 ) );
+				
 
 				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xaaaaaa );
 				directionalLight.position.x = Math.random() - 0.5;
@@ -99,9 +107,14 @@
 				directionalLight.position.z = Math.random() - 0.5;
 				directionalLight.position.normalize();
 				scene.add( directionalLight );
+				scene.add( new THREE.AmbientLight( 0x888888 ) );
 
 				var pointLight = new THREE.PointLight( 0x555555, 4 );
 				particleLight.add( pointLight );
+
+
+
+
 
 				renderer = new THREE.WebGLRenderer(  { antialias: true }  );
 				renderer.setClearColor( 0x5d5d5d );
@@ -115,10 +128,13 @@
 				
 
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				//renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );				
 				window.addEventListener( 'resize', onWindowResize, false );				
 
-				
+			console.log("INIT() ALMOST ENDED");
 				
 			animate();
+			
+			console.log("INIT() ENDED");
+			
 		}

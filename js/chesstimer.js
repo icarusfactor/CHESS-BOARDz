@@ -1,16 +1,54 @@
+   var version_chesstimer="050116_0229";
+ 
+//Matrix positions
+
+//relative positions
+//R Y
+//1 0
+//2 24
+//3 36
+//4 76
+//5 100
+//6 128
+//7 156  
+//8 184
+
+
+//C X
+//1 0
+//2 -28
+//3 -52
+//4 -76
+//5 -104
+//6 -128
+//7 -156
+//8 -180
+
+var locationX=0; 
+var locationY=0; 
+
+
+    var DIRECTION = "5"; // L=4 R=6 U=8 D=2 5=CENTER 
+    var DIRECTIONx = 0;
+    var DIRECTIONy = 0;  
     var SPACEBAR = 32;
     var ESCAPE = 27;
+    var ARROWUP = "8";
+    var ARROWDOWN = "2";
+    var ARROWLEFT = "4";
+    var ARROWRIGHT = "6";
     var ARROWS = function(key) {
       return (key >= 37 && key <= 40) || (key >= 63232 && key <= 63235);
+     
     };
 
     var initial_time = 10 * 60*5;
-    var game = null;
+    var chessgame = null;
 
     function createGame() {
-      game = new Game(initial_time, 'infodata', 'player1clock', 'player2clock');
-      game.resetClocks();
-      game.infodata.innerHTML = 'LOADING';
+      chessgame = new Game(initial_time, 'infodata', 'player1clock', 'player2clock');
+      chessgame.resetClocks();
+      chessgame.infodata.innerHTML = 'LOADING';
       
     }
 
@@ -26,33 +64,34 @@
         (seconds + '.' + decimal);
     }
 
-    function Player(clock_id, initial_time, game) {
+    function Player(clock_id, initial_time, chessgame) {
       this.clock = document.getElementById(clock_id);
       this.initial_time = initial_time;
       this.time = this.initial_time;
-      this.game = game;
+      this.chessgame = chessgame;
       this.opponent = null;
     }
     Player.prototype.play = function() {
       var opponent = this.opponent;
-      var game = this.game;
-      if (!game.game_over) {
-        clearTimeout(game.timer_loop);
-        game.timer_loop = setInterval(function(){
+      var chessgame = this.chessgame;
+      if (!chessgame.chessgame_over) {
+        clearTimeout(chessgame.timer_loop);
+        chessgame.timer_loop = setInterval(function(){
           opponent.time -= 1;
           if (opponent.time == 0) {
-            clearTimeout(game.timer_loop);
-            game.game_over = true;
+            clearTimeout(chessgame.timer_loop);
+            chessgame.game_over = true;
             spin = 1; //switch to spin mode.
-            game.infodata.innerHTML = 'GAME OVER';
-            game.infodata.className = '';
+            chessgame.infodata.innerHTML = 'GAME OVER';
+            chessgame.infodata.className = '';
           }
-          else{  game.infodata.innerHTML = 'IN PLAY';   }
-          game.displayTimers();
+           //This is commented out for DEBUG
+          //else{  chessgame.infodata.innerHTML = 'IN PLAY';   }
+          chessgame.displayTimers();
         }, 100);        
         opponent.clock.className = 'now_playing';
         this.clock.className = '';
-        game.infodata.className = 'hidden';
+        chessgame.infodata.className = 'hidden';
       }
     }
 
@@ -63,7 +102,8 @@
       this.player1.opponent = this.player2;
       this.player2.opponent = this.player1;
       this.timer_loop = null;
-      this.game_over = false;
+      this.chessgame_over = false;
+
     }
     // Dispatcher when we press a key
     Game.prototype.keypress = function(e) {
@@ -74,14 +114,30 @@
         spin = 3; //switch to black side. 
         this.player1.play(); }
       // right half of keyboard
-      else if (("yuiop[]\hjkl;'nm,./".indexOf(keychar) != -1)
-               || ARROWS(key)) {
+      else if ("yuiop[]\hjkl;'nm,./".indexOf(keychar) != -1)
+                {
         spin = 2; //switch to white side
         this.player2.play(); }
       else if (key == SPACEBAR) {
        		spin = 1; //switch to spin mode.	
         	this.pause(); }
-      else if (key == ESCAPE) {
+       else if ( "8".indexOf(keychar) != -1 ) {
+       DIRECTION="U";DIRECTIONx=0;DIRECTIONy=-4; 
+       console.log("UP ARROW PRESS");
+        } 
+     else if ( "4".indexOf(keychar) != -1 ) {
+       DIRECTION="L";DIRECTIONx=-4;DIRECTIONy=0; 
+       console.log("LEFT ARROW PRESS");
+        }  
+       else if ( "6".indexOf(keychar) != -1 ) {
+       DIRECTION="R";DIRECTIONx=4;DIRECTIONy=0; 
+       console.log("RIGHT ARROW PRESS");
+        } 
+     else if ( "2".indexOf(keychar) != -1 ) {
+       DIRECTION="D";DIRECTIONx=0;DIRECTIONy=4; 
+       console.log("DOWN ARROW PRESS");
+        }  
+       else if (key == ESCAPE) {
         this.resetClocks(); }
       else if ('=+'.indexOf(keychar) != -1) {
         this.player1.initial_time += 300;
@@ -98,7 +154,7 @@
       }
     }
     Game.prototype.pause = function() {
-      if (!this.game_over) {
+      if (!this.chessgame_over) {
         var infodata = this.infodata; 
         infodata.innerHTML = 'PAUSED';
         infodata.className = '';
@@ -127,25 +183,35 @@
       this.infodata.className = 'hidden';
       this.player1.time = this.player1.initial_time;
       this.player2.time = this.player2.initial_time;
-      this.game_over = false;
+      this.chessgame_over = false;
       this.displayTimers();
-      game.infodata.innerHTML = ' ';  //clear status
+      chessgame.infodata.innerHTML = ' ';  //clear status
     }
     
 	
      Game.prototype.addTime = function() {
-         game.player1.initial_time += 300;
-         game.player2.initial_time += 300;
-         game.resetClocks();
+         chessgame.player1.initial_time += 300;
+         chessgame.player2.initial_time += 300;
+         chessgame.resetClocks();
      }
  
    Game.prototype.removeTime = function() {
    	if (this.player1.initial_time >= 600) {
-         game.player1.initial_time -= 300;
+         chessgame.player1.initial_time -= 300;
          }
          if (this.player2.initial_time >= 600) {
-         game.player2.initial_time -= 300;
+         chessgame.player2.initial_time -= 300;
          }
-         game.resetClocks();
+         chessgame.resetClocks();
      }
     
+
+      Game.prototype.displayText = function( text ) {
+
+   	
+      	 chessgame.infodata.innerHTML = text;  //display text
+      
+      }
+
+
+

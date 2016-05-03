@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-        <script>var version="021016-0102"</script>
+        <script>var version="053016-1907"</script>
 	<head>
 		<title>CHESS BOARDz</title>
 		<meta http-equiv="cache-control" content="max-age=0" />
@@ -13,24 +13,25 @@
                 <link rel="stylesheet" type="text/css" href="css/theme.css">	
 	</head>
 	
-	<body style='' onkeypress='game.keypress(event)' onload='javascript:createGame();' >
+	<body style='' onkeypress='chessgame.keypress(event)' onload='javascript:createGame();' >
 	
 	<div id="info">	
 	<table border="0" style="background-color:#000000;color:#FFFFFF;width:100%" cellpadding="3" cellspacing="1">
 	<tr>	
-	<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: left;width: 100%;line-height:100px;" type="button"  onclick="spin=3;game.player1.play();" >WHITE</button> </td>
+	<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: left;width: 100%;line-height:100px;" type="button"  onclick="spin=3;chessgame.player1.play();" >WHITE</button> </td>
 	<td rowspan="2" > <div id='player1clock'>0:00</div> </td>
 	<td><CENTER> <button style="background: white;" type="button">START GAME</button></CENTER></td>
-	<td rowspan="2" > <div id='player2clock'>0:00</div> </td>
-	<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: right;;width: 100%;heigth: 100%;line-height:100px;" type="button" onclick="spin=2;game.player2.play();" >BLACK</button> </td>
+	<td rowspan="2" > <div id='player2clock'>0:00</div> </td>	
+	<td width="18%" rowspan="2" > <button id="wbut" style="background: white;float: right;;width: 100%;heigth: 100%;line-height:100px;" type="button" onclick="spin=2;chessgame.player2.play();" >BLACK</button> </td>
 	</tr>
 	<tr>
 	<td width="50%" ><CENTER> <div id='infodata' class='hidden'> </CENTER></div> </td>
 	</tr>
 	</table>
      	</div>			
-			
-    	<script src="js/chesstimer.js"></script>
+			 
+        <script src="js/init.js"></script>
+    	<script src="js/chesstimer.js"></script> 
     	<script src="js/three.min.js"></script>
 	<script src="js/loaders/collada/Animation.js"></script>
 	<script src="js/loaders/collada/AnimationHandler.js"></script>
@@ -59,7 +60,7 @@
 	    <li><a href="javascript:location.reload();">CHESS BOARDz</a></li>   
 	    <li  style="float:right;list-style-type:none;"  ><a href="#openModal">About</a></li>  
 	    <li  style="float:right;list-style-type:none;"  ><a href="#">View</a>
-        <ul class="main-nav-sub">
+        <ul class="main-nav-sub">          
 	    <li><a href="javascript:setSpinCAM();">ROTATE</a></li>
 	    <li><a href="javascript:setBlackCAM();">BLACK 3/4</a></li>
 	    <li><a href="javascript:setWhiteCAM();">WHITE 3/4</a></li>
@@ -69,13 +70,14 @@
             <li  style="float:right;list-style-type:none;"  ><a href="#">Action</a>
         <ul class="main-nav-sub">
        	    <!-- <li><a href="javascript:init();">INIT</a></li> -->
-            <li><a href="javascript:game.pause();">PAUSE</a></li>
-            <li><a href="javascript:game.addTime();">+ TIME</a></li>
-            <li><a href="javascript:game.removeTime();">- TIME</a></li>
-            <li><a href="javascript:game.resetClocks();">RESET CLOCKS</a></li>
+            <li><a href="javascript:chessgame.pause();">PAUSE</a></li>
+            <li><a href="javascript:chessgame.addTime();">+ TIME</a></li>
+            <li><a href="javascript:chessgame.removeTime();">- TIME</a></li>
+            <li><a href="javascript:chessgame.resetClocks();">RESET CLOCKS</a></li>
        
         </ul>
     	   </li>
+    	    <li  style="float:right;list-style-type:none;"  ><a href="javascript:init();">::INIT HACK::</a></li>  
 	</ul>
 	</nav>		
 	
@@ -87,7 +89,28 @@
 
 		<script>  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();</script>
 		
-		<script src="js/init.js"></script>
+		
+		
+		
+		<script>
+		
+		var container;
+			var camera, scene, renderer, raycaster ,objects,spin;
+			var particleLight;
+			var game_mode =0; //default mode hover piece.
+			
+			//var mouse = new THREE.Vector2(), INTERSECTED,SELECTED_PIECE,INTERSECTED,INTERSECTBOARD,SELECTED_BOARD;
+                        //this is a mixed use variable that needs to be split out later into vector2 and vector3 vars.       
+			var mouse = new THREE.Vector3(), INTERSECTED,SELECTED_PIECE,INTERSECTED,INTERSECTBOARD,SELECTED_BOARD;
+			var HOLD_POSX=0;
+			var HOLD_POSY=0;
+			raycaster = new THREE.Raycaster();	
+			var clock = new THREE.Clock();
+			
+		
+		
+		</script>
+		
 		<!-- init() is hiding in here. the only way i could get it to work.  -->
 		<script src="js/colladapieces.js"></script>
 		<script src="js/colladamaterials.js"></script>
@@ -95,17 +118,25 @@
 		
 		<script>
 
+// Method to make move. 
+//   <------------------------------|                <----------------------------|
+//HOVER piece /  SELECT piece / UNSELECT piece / HOVER BOARD / SELECT BOARD / UNSELECT BOARD /(dbl click)FINISH MOVE
+
 			
-			var container;
-			var camera, scene, renderer, raycaster ,objects,spin;
-			var particleLight;
-			
-			
-			var mouse = new THREE.Vector2(), INTERSECTED,SELECTED;
-			
-						
-			raycaster = new THREE.Raycaster();	
-			var clock = new THREE.Clock();
+			document.addEventListener("DOMContentLoaded", theDomHasLoaded, false);
+				window.addEventListener("load", pageFullyLoaded, false);
+ 
+			function theDomHasLoaded(e) {
+				// do something
+				console.log("LOADED" );
+				init();
+						    }
+ 
+			function pageFullyLoaded(e) {
+				// do something again
+				console.log("FULLY LOADED" );
+				init();
+						    }
 			
 			
 			
@@ -128,8 +159,117 @@
 
 			}
 			
+			function onDocumentMouseDown( event ) {
+	
+			        event.preventDefault();			        
+			       		        
+			        if( INTERSECTED.name !== null ){
+			        //console.log("Mouse Down:"+INTERSECTED.name ); 
+			         //only one selected piece at a time. 
+			         SELECTED_PIECE  = INTERSECTED;	
+			         SELECTED_PIECE.currentHex = INTERSECTED.material.color.getHex();
+			         
+                                 //Check piece to see if its white PIECE_W or black PIECE_B. If black invert Z axis,since they are rotated 180.
+                                 if( SELECTED_PIECE.name.match(/PIECE_B/gi)  ){
+                                 console.log("BLACK PIECE FOUND: "+SELECTED_PIECE.name );
+                                 }
+                                 else {
+                                 console.log("WHITE PIECE FOUND: "+SELECTED_PIECE.name ); 
+                                 }
+		         
+			        
+			        console.log( "PIECE x:"+SELECTED_PIECE.position.x+" y:"+SELECTED_PIECE.position.y+" z:"+SELECTED_PIECE.position.z     );
+			        chessgame.infodata.innerHTML = "SEL: "+SELECTED_PIECE.name+" " ;
+			        
+			        			        
+			        //toggle game mode
+			        	switch( game_mode ) {	
+			      case 0:  
+			      		console.log("MODE WAS:"+game_mode ); 
+			        	SELECTED_PIECE.material.color.setHex( 0x0000ff );	
+			        	if ( INTERSECTBOARD ) { INTERSECTBOARD.material.color.setHex( INTERSECTBOARD.currentHex ); INTERSECTBOARD = null; SELECTED_BOARD=null; game_mode=0 }
+			        	game_mode = 1;		
+			        	console.log("MODE IS NOW:"+game_mode ); 	        	
+			        	break;	  
+			      case 1:
+			      		console.log("MODE WAS:"+game_mode ); 			               
+			                console.log( DIRECTION );  
+			                 //position is transform. So need to find point A . Point B . and the different between them.   
+			                   
+			                if ( INTERSECTBOARD ) {
+			                   //INTERSECTBOARD.x = INTERSECTBOARD.matrixWorld.getPosition().x;
+			         	   //INTERSECTBOARD.y = INTERSECTBOARD.matrixWorld.getPosition().y;
+				           //INTERSECTBOARD.z = INTERSECTBOARD.matrixWorld.getPosition().z;	
+                                           INTERSECTBOARD.x = INTERSECTBOARD.position.x;
+			         	   INTERSECTBOARD.y = INTERSECTBOARD.position.y;
+				           INTERSECTBOARD.z = INTERSECTBOARD.position.z;	
+
+
+
+			                   console.log( "BOARD x:"+INTERSECTBOARD.x+" y:"+INTERSECTBOARD.y+" z:"+INTERSECTBOARD.z ); 
+			                   INTERSECTBOARD.material.color.setHex( INTERSECTBOARD.currentHex); 
+
+                                           if( INTERSECTBOARD.name.match(/BOARD_/) ) {
+                                                //Search the board position array for location.    
+                                                //TEST  
+                                                blocoff = BOARD_POS.indexOf( "BOARD_"+INTERSECTBOARD.name ); 
+                                                var sname = INTERSECTBOARD.name;
+                                                sname = sname.substring(6,12);                     
+                                                var blocoff = BOARD_POS.indexOf( sname );
+                                                console.log( " (scanBOARDintersect) New Position "+sname+" "+blocoff+" of "+BOARD_POS[ blocoff ]+" X:"+BOARD_POS[ blocoff+1 ]+" Y:"+BOARD_POS[ blocoff+2 ] ); 
+                                                }
+
+                                           
+			                    //Move selected piece to square.	
+			                                                             
+                                         
+                                           
+                                           console.log( "OLD PIECE POS x:"+mat_row_abs[ PIECE_POS[ blocoff+2 ] ]+" z:"+mat_col_abs[ PIECE_POS[ blocoff+1 ] ]  );
+                                           moveDAE( SELECTED_PIECE ,SELECTED_PIECE ,BOARD_POS[ blocoff+1 ], BOARD_POS[ blocoff+2 ] , SELECTED_PIECE.currentHex );
+
+                                           
+                                           DIRECTOIN="C";DIRECTIONx=0;DIRECTIONy=0; //after move ,reset movement.
+
+                                           console.log( "HYBRID PIECE POS x:"+INTERSECTBOARD.x+" z:"+ INTERSECTBOARD.z    );
+                                           console.log( "NEW PIECE POS x:"+SELECTED_PIECE.position.x+" y:"+SELECTED_PIECE.position.y+" z:"+SELECTED_PIECE.position.z     );
+                                           
+                                    
+			                  
+			                    SELECTED_BOARD=null;
+			                    game_mode=0;	
+			                    
+			                	SELECTED_PIECE.geometry.colorsNeedUpdate = true;
+						SELECTED_PIECE.material.needsUpdate = true;
+						SELECTED_PIECE.geometry.buffersNeedUpdate = true;
+						SELECTED_PIECE.geometry.uvsNeedUpdate = true;
+			                    
+			                     }
+			                     
+			                     
+			                //toggle only if on piece. 			                
+			                if ( INTERSECTED ) {
+			                   INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+			                   INTERSECTED = null;
+			                   SELECTED_PIECE=null;
+			                    game_mode=0;}
+			                     
+			                     
+			                     
+			                    console.log("MODE IS NOW:"+game_mode ); 
+			        	break;       			        	          
+			     
+			        	}          	  			                
+			               
+			         
+			       
+			                                 
+						
+			}
+			                                 
+						
 			
 			
+			}
 			
 			var setSpinCAM = function() {	
 				spin = 1;	
@@ -196,56 +336,207 @@
 				}
 			
 
-			var findIntersections = function () {
-				// find intersections
-				scene.updateMatrixWorld();
-				camera.updateMatrixWorld();
-				raycaster.setFromCamera( mouse, camera );
-				
-				var intersects = raycaster.intersectObjects( scene.children,true );
 
-				if ( intersects.length > 0 ) {
-				
-					SELECTED = intersects[ 0 ].object;
+			var scanPIECEintersect = function ( intersects ) {
+			
+					
 
 					if ( INTERSECTED != intersects[ 0 ].object ) {
 
-						if ( INTERSECTED ) {
+						if ( INTERSECTED ) {						
 						 INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+						
 						}
-
+						
 						INTERSECTED = intersects[ 0 ].object;
+						
+						
 						INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+						
+						
 						INTERSECTED.name = INTERSECTED.material.name;
-						if(INTERSECTED.name != "grid" ) { 
-						//console.log("PIECE: "+INTERSECTED.name );
-						game.infodata.innerHTML = " "+INTERSECTED.name+" " ;
+						INTERSECTED.position.x    = INTERSECTED.position.x;
+						INTERSECTED.position.y    = INTERSECTED.position.y;
+						INTERSECTED.position.z    = INTERSECTED.position.z;
+                                                
+						
+						console.log("HOVER: "+INTERSECTED.name );
+												
+						//need to make this global or a class			
+						chessgame.infodata.innerHTML = " "+INTERSECTED.name+" " ;
+						//setMaterial(INTERSECTED, square_materialD );
+						
 						INTERSECTED.material.color.setHex( 0xff0000 );
-   						}
+						
+						
+						INTERSECTED.geometry.colorsNeedUpdate = true;
+						INTERSECTED.material.needsUpdate = true;
+						INTERSECTED.geometry.buffersNeedUpdate = true;
+						INTERSECTED.geometry.uvsNeedUpdate = true;
+						
+						
+						
+   						
 					}
 
-				} else {
+                                        } // end of scanPIECEintersect
 
-					if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
-					INTERSECTED = null;
 
+
+			var scanBOARDintersect = function ( intersects ) {
+								
+
+					if ( INTERSECTBOARD != intersects[ 0 ].object ) {
+
+						if ( INTERSECTBOARD ) {						
+						 INTERSECTBOARD.material.color.setHex( INTERSECTBOARD.currentHex );
+						
+						}
+						
+						INTERSECTBOARD = intersects[ 0 ].object;
+						
+						
+						INTERSECTBOARD.currentHex = INTERSECTBOARD.material.color.getHex();
+						
+						
+						INTERSECTBOARD.name = INTERSECTBOARD.material.name;
+						
+										
+						console.log("HOVER : "+INTERSECTBOARD.name );
+						
+											
+						chessgame.infodata.innerHTML = " "+INTERSECTBOARD.name+" " ;
+						//setMaterial(INTERSECTED, square_materialD );
+						
+						INTERSECTBOARD.material.color.setHex( 0xff0000 );
+						//console.log("HIGHLIGHT BOARD: "+INTERSECTBOARD.name +" "+ INTERSECTBOARD.material.color.getHex().toString(16) );
+						
+												
+						INTERSECTBOARD.geometry.colorsNeedUpdate = true;
+						INTERSECTBOARD.material.needsUpdate = true;
+						INTERSECTBOARD.geometry.buffersNeedUpdate = true;
+						INTERSECTBOARD.geometry.uvsNeedUpdate = true;
+						
+						
+   						
+					}
+
+                                        } // end of scanBOARDintersect
+
+
+
+			function sleep(miliseconds) {
+			   var currentTime = new Date().getTime();
+
+			   while (currentTime + miliseconds >= new Date().getTime()) {
+			   }
 				}
 
 
-				 } //end of findIntersections
+			var selectAndMove = function () {
+			// default inital mode is hover for piece.  movemode=0
+			// once a piece that was hovered over is selected it move onto the next step toward selecting square or unselect original piece. movemode=1
+			// Need a way to disable and enable modes.    
+			// enable/disable hover piece
+			// enable/disable/unselect select piece
+			// enable/disable hover board 
+			// enable/disable/unselect/dbl click select board
+			//enable/disable move.
 			
+			
+				// find intersections
+				switch( game_mode ) {
+				case 0: 
+				 	//console.log("GAME MODE:"+game_mode ); 
+					ChessMoveMode0();
+					break;
+				case 1:
+					//console.log("GAME MODE:"+game_mode ); 
+					ChessMoveMode1();
+					break;
+				
+				default:
+					ChessMoveMode0();
+				
+				}
+			
+
+				} //end of selectandmove
+
+
+
+				//DEFAULT PICK PIECE MODE : HOVER PIECE(ENABLE)   SELECT PIECE (ENABLE) UNSELECT PIECE (DISABLE)	
+				//                        : HOVER SQUARE(DISABLE) SELECT SQUARE(DISABLE)  		
+				var ChessMoveMode0 = function () {
+				//set notification in game mode 0
+				game_mode=0;
+				scene.updateMatrixWorld();
+				camera.updateMatrixWorld();
+				raycaster.setFromCamera( mouse, camera );	
+				// find intersections		
+				var intersects = raycaster.intersectObjects( scene.children,true );
+				if ( intersects.length > 0 ) {				
+				SELECTED_PIECE = intersects[ 0 ].object;	
+				if( SELECTED_PIECE.material.name.match(/PIECE_/) ) { 				 
+				    //hover select chess piece.		    
+				    scanPIECEintersect( intersects );sleep(100);  }
+				} else {				
+					if ( INTERSECTED ) {					
+					//unselect chess piece if no intersections detected..
+					INTERSECTED.material.color.setHex( INTERSECTED.currentHex ); INTERSECTED = null; }
+				}				
+				} //end of ChessMoveMode0
+	
+				
+				
+				//SELECT SQUARE MODE      : HOVER PIECE(DISABLE) SELECT PIECE (DISABLE) UNSELECT PIECE (ENABLE)
+				//                        : HOVER SQUARE(ENABLE) SELECT SQUARE(ENABLE)  
+				var ChessMoveMode1 = function () {
+				//set notification to game mode 1
+				game_mode=1;
+				scene.updateMatrixWorld();
+				camera.updateMatrixWorld();
+				raycaster.setFromCamera( mouse, camera );	
+				// find intersections			
+				var intersects = raycaster.intersectObjects( scene.children,true );
+
+				if ( intersects.length > 0 ) {	
+				SELECTED_BOARD = SELECTED_PIECE = intersects[ 0 ].object;	
+				
+				
+				if( SELECTED_BOARD.material.name.match(/BOARD_/) ) { 
+				     scanBOARDintersect( intersects );  }
+						
+
+				} else {				
+					
+					if ( INTERSECTBOARD ) { INTERSECTBOARD.material.color.setHex( INTERSECTBOARD.currentHex ); INTERSECTBOARD = null; }
+					
+				}
+				
+				} //end of ChessMoveMode1
+				
+		
 			
 
 			function render() {
 			
 			
-			      findIntersections();
+			      //findIntersections();
+			      selectAndMove(); 
+			      
 
                               if( spin == 1 ){
                               	//Roate around board                              	
                               	setSpinCAM();				
 				}		
+				
+			      if( spin == 2 ){ setWhiteCAM(); }
+			      if( spin == 3 ){ setBlackCAM();  }
+				
+				
+				
 
 				
 				camera.lookAt( scene.position );
@@ -255,8 +546,14 @@
 				renderer.render( scene, camera );
 			}
 			
-		 init();  //  HAVE NO CLUE WHY IT DOES NOT WORK HERE.	
+		 //init();  //  HAVE NO CLUE WHY IT DOES NOT WORK HERE.	
+		 
+		 
+		 
 	</script>
+	
+	
+	<script >init();</script>
 	
 	</body>
 </html>

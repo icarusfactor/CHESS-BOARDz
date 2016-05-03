@@ -1,3 +1,6 @@
+			var version_materials="050116-2257";
+			
+			
 			var material_black_p1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });		
 			var material_black_p2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
 			var material_black_p3 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 		
@@ -6,35 +9,35 @@
 			var material_black_p6 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
 			var material_black_p7 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
 			var material_black_p8 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_p1.name = "BP1";
-			material_black_p2.name = "BP2";
-			material_black_p3.name = "BP3"; 
-			material_black_p4.name = "BP4";
-			material_black_p5.name = "BP5"; 
-			material_black_p6.name = "BP6";
-			material_black_p7.name = "BP7";
-			material_black_p8.name = "BP8";
+			material_black_p1.name = "PIECE_BP1";
+			material_black_p2.name = "PIECE_BP2";
+			material_black_p3.name = "PIECE_BP3"; 
+			material_black_p4.name = "PIECE_BP4";
+			material_black_p5.name = "PIECE_BP5"; 
+			material_black_p6.name = "PIECE_BP6";
+			material_black_p7.name = "PIECE_BP7";
+			material_black_p8.name = "PIECE_BP8";
 			
 			var material_black_k1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
 			var material_black_k2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_k1.name = "Bk1";
-			material_black_k2.name = "Bk2";			
+			material_black_k1.name = "PIECE_Bk1";
+			material_black_k2.name = "PIECE_Bk2";			
 			
 			var material_black_r1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
 			var material_black_r2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_r1.name = "Br1";
-			material_black_r2.name = "Br2";	
+			material_black_r1.name = "PIECE_Br1";
+			material_black_r2.name = "PIECE_Br2";	
 			
 			
 			var material_black_b1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
 			var material_black_b2 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_b1.name = "Bb1";
-			material_black_b2.name = "Bb2";	
+			material_black_b1.name = "PIECE_Bb1";
+			material_black_b2.name = "PIECE_Bb2";	
 						
 			var material_black_K = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
 			var material_black_Q = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });
-			material_black_K.name = "BK";
-			material_black_Q.name = "BQ";	
+			material_black_K.name = "PIECE_BK";
+			material_black_Q.name = "PIECE_BQ";	
 			
 			
 			var material_black = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 }); 
@@ -47,41 +50,215 @@
 			var material_white_p6 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			var material_white_p7 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			var material_white_p8 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_p1.name = "WP1";
-			material_white_p2.name = "WP2";
-			material_white_p3.name = "WP3"; 
-			material_white_p4.name = "WP4";
-			material_white_p5.name = "WP5"; 
-			material_white_p6.name = "WP6";
-			material_white_p7.name = "WP7";
-			material_white_p8.name = "WP8";
+			material_white_p1.name = "PIECE_WP1";
+			material_white_p2.name = "PIECE_WP2";
+			material_white_p3.name = "PIECE_WP3"; 
+			material_white_p4.name = "PIECE_WP4";
+			material_white_p5.name = "PIECE_WP5"; 
+			material_white_p6.name = "PIECE_WP6";
+			material_white_p7.name = "PIECE_WP7";
+			material_white_p8.name = "PIECE_WP8";
 				
 			
 			var material_white_k1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			var material_white_k2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_k1.name = "Wk1";
-			material_white_k2.name = "Wk2";		
+			material_white_k1.name = "PIECE_Wk1";
+			material_white_k2.name = "PIECE_Wk2";		
 			
 			var material_white_r1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			var material_white_r2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_r1.name = "Wr1";
-			material_white_r2.name = "Wr2";	
+			material_white_r1.name = "PIECE_Wr1";
+			material_white_r2.name = "PIECE_Wr2";	
 			
 			var material_white_b1 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			var material_white_b2 = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_b1.name = "Wb1";
-			material_white_b2.name = "Wb2";	
+			material_white_b1.name = "PIECE_Wb1";
+			material_white_b2.name = "PIECE_Wb2";	
 			
 			var material_white_K = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			var material_white_Q = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
-			material_white_K.name = "WK";
-			material_white_Q.name = "WQ";	
+			material_white_K.name = "PIECE_WK";
+			material_white_Q.name = "PIECE_WQ";	
 			
 			var material_white = new THREE.MeshPhongMaterial( { color: 0xffffff,specular: 0xffffff,shininess: 20 } );
 			
 						
 			//var material_hold = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 } );
 				
+	
+//initial piece board positions.
+var PIECE_POS = ["Wr2",0,0,
+                 "Wk2",0,1,
+                 "Wb2",0,2,
+                 "WK" ,0,3,
+                 "WQ" ,0,4,
+                 "Wb1",0,5,
+                 "Wk1",0,6,
+                 "Wr1",0,7,
+                 "WP1",1,0,
+                 "WP2",1,1,
+                 "WP3",1,2,
+                 "WP4",1,3,
+                 "WP5",1,4,
+                 "WP6",1,5,
+                 "WP7",1,6,
+                 "WP8",1,7,              
+                 "BP1",6,0,
+                 "BP2",6,1,
+                 "BP3",6,2,
+                 "BP4",6,3,
+                 "BP5",6,4,
+                 "BP6",6,5,
+                 "BP7",6,6,
+                 "BP8",6,7,
+                 "Br2",7,0,
+                 "Bk2",7,1,
+                 "Bb2",7,2,
+                 "BK" ,7,3,
+                 "BQ" ,7,4,
+                 "Bb1",7,5,
+                 "Bk1",7,6,
+                 "Br1",7,7];
+	
+	
+//current piece board positions. Y or N has mesh been converted to Three mesh after removed then added. nodedae.rotateX( 30 );
+var CURRENT_PIECE_POS = ["Wr2",0,0,"Y",
+                 "Wk2",0,1,"Y",
+                 "Wb2",0,2,"Y",
+                 "WK" ,0,3,"Y",
+                 "WQ" ,0,4,"Y",
+                 "Wb1",0,5,"Y",
+                 "Wk1",0,6,"Y",
+                 "Wr1",0,7,"Y",
+                 "WP1",1,0,"Y",
+                 "WP2",1,1,"Y",
+                 "WP3",1,2,"Y",
+                 "WP4",1,3,"Y",
+                 "WP5",1,4,"Y",
+                 "WP6",1,5,"Y",
+                 "WP7",1,6,"Y",
+                 "WP8",1,7,"Y",            
+                 "BP1",6,0,"Y",
+                 "BP2",6,1,"Y",
+                 "BP3",6,2,"Y",
+                 "BP4",6,3,"Y",
+                 "BP5",6,4,"Y",
+                 "BP6",6,5,"Y",
+                 "BP7",6,6,"Y",
+                 "BP8",6,7,"Y",
+                 "Br2",7,0,"Y",
+                 "Bk2",7,1,"Y",
+                 "Bb2",7,2,"Y",
+                 "BK" ,7,3,"Y",
+                 "BQ" ,7,4,"Y",
+                 "Bb1",7,5,"Y",
+                 "Bk1",7,6,"Y",
+                 "Br1",7,7,"Y"];
+	
+	
+	
+	
+//initial board positions.
+var BOARD_POS = ["L4-4-2",0,0,
+                 "D4-4-2",0,1,
+                 "L4-3-2",0,2,
+                 "D4-3-2",0,3,
+                 "L4-2-2",0,4,
+                 "D4-2-2",0,5,
+                 "L4-1-2",0,6,
+                 "D4-1-2",0,7,
+
+                 "D4-4-1",1,0,
+                 "L4-4-1",1,1,
+                 "D4-3-1",1,2,
+                 "L4-3-1",1,3,
+                 "D4-2-1",1,4,
+                 "L4-2-1",1,5,
+                 "D4-1-1",1,6,
+                 "L4-1-1",1,7,
+                
+                 "L3-4-2",2,0,
+                 "D3-4-2",2,1,
+                 "L3-3-2",2,2,
+                 "D3-3-2",2,3,
+                 "L3-2-2",2,4,
+                 "D3-2-2",2,5,
+                 "L3-1-2",2,6,
+                 "D3-1-2",2,7,
+
+                 "D3-4-1",3,0,
+                 "L3-4-1",3,1,
+                 "D3-3-1",3,2,
+                 "L3-3-1",3,3,
+                 "D3-2-1",3,4,
+                 "L3-2-1",3,5,
+                 "D3-1-1",3,6,
+                 "L3-1-1",3,7,
+
+                 "L2-4-2",4,0,
+                 "D2-4-2",4,1,
+                 "L2-3-2",4,2,
+                 "D2-3-2",4,3,
+                 "L2-2-2",4,4,
+                 "D2-2-2",4,5,
+                 "L2-1-2",4,6,
+                 "D2-1-2",4,7,
+
+                 "D2-4-1",5,0,
+                 "L2-4-1",5,1,
+                 "D2-3-1",5,2,
+                 "L2-3-1",5,3,
+                 "D2-2-1",5,4,
+                 "L2-2-1",5,5,
+                 "D2-1-1",5,6,
+                 "L2-1-1",5,7,
+
+                 "L1-4-2",6,0,
+                 "D1-4-2",6,1,
+                 "L1-3-2",6,2,
+                 "D1-3-2",6,3,
+                 "L1-2-2",6,4,
+                 "D1-2-2",6,5,
+                 "L1-1-2",6,6,
+                 "D1-1-2",6,7,
+
+                 "D1-4-1",7,0,
+                 "L1-4-1",7,1,
+                 "D1-3-1",7,2,
+                 "L1-3-1",7,3,
+                 "D1-2-1",7,4,
+                 "L1-2-1",7,5,
+                 "D1-1-1",7,6,
+                 "L1-1-1",7,7];
+	
+		
+	
+//Z positions 1-8 for rows.
+    var mat_row_abs = [
+    3.5 ,
+    2.5 ,
+    1.5 ,
+    0.5 ,
+   -0.5 ,
+   -1.5 ,
+   -2.5 ,
+   -3.5
+    ];
+//X positions 1-8 for columns.
+    var mat_col_abs = [
+    3.5, 
+    2.5,
+    1.5 , 
+    0.5 ,
+   -0.5 ,
+   -1.5 ,
+   -2.5,    
+   -3.5     
+    ];
+
+	
+	var parthack=0;
+	
 	
 			//setMaterial(dae, new THREE.MeshBasicMaterial({color: 0xff0000}));
 			var setMaterial = function(node, material) {
@@ -91,18 +268,125 @@
                            setMaterial(node.children[i], material);
                            }
                                               }
-                                                                   }
+        
+                                                     }
+                                                     
+                      
+                       var positionDAE = function( nodedae , daex , daez ) {	
+				//only x and z are needed . 
+                                nodedae.position.x = daex;    // default 1.0
+				nodedae.position.y = 0.0;
+				nodedae.position.z = daez;    // default 1.0
+                               
+
+				nodedae.updateMatrix();	
+                                
+				}                                             
+	
+	               var positionDAE2 = function( nodedae , daex , daey ) {	
+				//only x and z are needed . 
+                                nodedae.position.x = daex;    // default 1.0                                
+				nodedae.position.y = daey;
+				nodedae.position.z = 0.0;    // default 1.0
+                               
+
+				nodedae.updateMatrix();	
+                                
+				}          
+	
+	                var unsetDAE = function( nodedae ) {	
+	                 console.log("unsetDAE"); 
+	                 //var selectedObject = scene.getObjectByName(nodedae.name);
+                         //collada.scene.remove( selectedObject );
+                         //scene.remove( nodedae );
+                         //nodedae.rotateX( 30 );
+                         nodedae.parent.remove(nodedae);
+			 
+                         //nodedae.updateMatrix();
+                         //animate();
+	                console.log("removed "+nodedae.name ); 
+	                }
 	
 	
-			var setDAE = function( dae , daex , daez , daecolor ) {	
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.002;
-				dae.position.x = daex;    //default 1.0
-				dae.position.y = 0.0
-				dae.position.z = daez;    // default 1.0	
-				setMaterial(dae, daecolor );
-				dae.updateMatrix();				
-				scene.add( dae );
-				}
+			var setDAE = function( nodedae , daecolor ) {				
+				nodedae.scale.x = nodedae.scale.y = nodedae.scale.z = 0.002;
+				nodedae.position.x = 0.0;    //default 1.0
+				nodedae.position.y = 0.0;
+				nodedae.position.z = 0.0;    // default 1.0	
+				setMaterial(nodedae, daecolor );
+				nodedae.updateMatrix();	
+				nodedae.castShadow = true;
+				nodedae.receiveShadow = true;
+				scene.add( nodedae );	
+				
+				//if( nodedae.name.match(/PIECE_/) ) {
+                                      //Search the piece position array for location. 
+                                      var sname = nodedae.material.name;
+                                      sname = sname.substring(6,9);                     
+                                      var blocoff = PIECE_POS.indexOf( sname );
+                                   console.log( " ( setDAE ) New Position "+sname+" "+blocoff+" of "+mat_row_abs[ PIECE_POS[ blocoff+2 ] ]+" X:"+ mat_col_abs[ PIECE_POS[ blocoff+1 ] ]  ); 
+				positionDAE( nodedae , mat_row_abs[ PIECE_POS[ blocoff+2 ] ]  ,  mat_col_abs[ PIECE_POS[ blocoff+1 ] ] );
+				
+			//	}
+
+                                }
+                      
+
+                       var moveDAE = function( nodedae ,newnodedae, boarddaex, boarddaey , daecolor ) {	
+     
+                          
+                          console.log("moveDAE "+nodedae.name ); 
+                          unsetDAE( nodedae );
+                                
+                         
+                                                    
+                          nodedae.scale.x = nodedae.scale.y = nodedae.scale.z = 0.04;
+			  nodedae.position.x = -1 * boarddaey+3.3;    //default 1.0
+			  nodedae.position.y = 0.0;	
+			  nodedae.position.z = -1 * boarddaex+3.7; // default 1.0	
+			  //setMaterial(nodedae, new THREE.MeshBasicMaterial({color: 0xff0000}) );
+			  //nodedae.updateMatrix()
+			  //nodedae.castShadow = true;
+			  //nodedae.receiveShadow = true;
+			  //nodedae.parent.add( nodedae );
+			  scene.add( nodedae );		
+			  
+			  if( nodedae.name.match(/PIECE_/) ) {
+                               //Search the PIECE array for conversion Y or N.    
+                               blocoff = CURRENT_PIECE_POS.indexOf( "PIECE_"+nodedae.name ); 
+                                                var sname = nodedae.name;
+                                                sname = sname.substring(6,9);                     
+                                                var pief = CURRENT_PIECE_POS.indexOf( sname );
+                                                console.log("PIECE: "+sname ); 
+                           
+			  if( CURRENT_PIECE_POS[ pief+3 ] == "Y" ){	  
+			  nodedae.position.z =   -1 * boarddaex+3.7; // 1 * boarddaey+3.5; //mat_row_abs[ CURRENT_PIECE_POS[ pief+2 ] ];
+			  nodedae.position.y = 0.0;
+			  nodedae.position.x =  -1 * boarddaey+3.3;  //-1 * boarddaex+2.0;  //-1 * mat_col_abs[ CURRENT_PIECE_POS[ pief+1 ] ];
+			  nodedae.rotateX( 29.9 );
+			  //scence.roateX(30);
+			  //nodedae.rotateZ( 30 );
+			  //nodedae.rotateY( 30 );
+			  CURRENT_PIECE_POS[ pief+3 ]="N";
+			  
+			  }
+			  } //end of PIECE match
+			  nodedae = newnodedae;
+                          console.log("added  "+nodedae.name ); 
+                          
+                          
+                          
+                           //if( nodedae.name.match(/PIECE_/) ) {
+                                      //Search the piece position array for location. 
+                           //           var sname = boarddae.material.name;
+                           //           sname = sname.substring(6,12);                     
+                           //           var blocoff = BOARD_POS.indexOf( sname );
+                           //        console.log( " ( moveDAE ) New Position "+sname+" "+blocoff+" of X: "+mat_row_abs[ BOARD_POS[ blocoff+2 ] ]+" Z:"+ mat_col_abs[ BOARD_POS[ blocoff+1 ] ]  ); 
+			//	positionDAE2( nodedae , 8 * mat_col_abs[ BOARD_POS[ blocoff+2 ] ]  , -8 * mat_row_abs[ BOARD_POS[ blocoff+1 ] ] );
+                                
+                              
+                             // }
+                            }
 
 	
 				
