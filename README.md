@@ -16,39 +16,41 @@ DESIGN GUIDELINES:<BR>
  Had to genereate the squares after pieces inside init(), order of operation made it work.<BR>  
 <BR>
 IRC:
-You can catch me online as user factor uisng<BR>
+You can catch me online as user factor using<BR>
 an irc client asimov.freenode.net or web - http://webchat.freenode.net/ <BR>
-Chat Rooms #three.js #webgl ##chess #blender<BR>
+Chat Rooms #tulsalug #three.js #webgl ##chess #blender<BR>
 <BR>
 Other sites and githubs used<BR>
 <BR>
+  STOCKFISH.JS Chess engine in Javascript http://www.stockfishchess.com/
   CHESSBOARD.JS  http://chessboardjs.com  https://github.com/oakmac/chessboardjs/ <BR>
   THREE.JS  http://threejs.org/  https://github.com/mrdoob/three.js/ <BR>
   HTML5 audio API XM MOD player https://github.com/junghans-schneider/ModPlayer.js <BR>
   
 <BR>
 TODO:<BR>
- [X] Add Piece Selector <BR>
- [ ] Add Square Selector<BR>
- [ ] "infodata" status will have piece name while IN PLAY. <BR>
- [ ] Integrate modified chessboard.js to insert and get FEN data.<BR>
- [ ] Add letters and numbers to side of board that match FEN positions. <BR>
- [ ] Move pieces to sqaures on chess board.<BR>
- [ ] Remove pieces from chess board<BR>
- [ ] Limit piece selector to side that is active In Play<BR>
- [ ] Make Start Game Button Work. <BR>
- [ ] Remove selector for Rotate and Top mode. <BR>
- [ ] Record FEN moves for playback and download. <BR>
- [ ] Add AI player<BR>
- [ ] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
- [X] Separated main file into smaller files. <BR>
- [ ] Fix init() location , so that it makes sense.<BR> 
- [ ] Broke access to infodata top box , need to make global or class function. <BR>
- [ ] Show options the piece can move once selected.<BR>
- [ ] Animate / make draggable a selected piece. <BR>
- [ ] Once mouse up event detected on draggable object,make sure location is within chess rules.Else revert back.<BR>
- [ ] Once selected make no other object selectable until same object selected again.<BR>
- [ ] Once object selected make squares selectable. <BR>
+ P = Priority Get Done item (only one per list)<BR>
+ N = Normal Get Done item.<BR>
+ L = Low level Get Done item.<BR>
+ I = Idea to research<BR>
+ F = Good feature to have,if I get a chance to add it.<BR>
+ <BR>
+ [N] Integrate modified chessboard.js to get FEN data.<BR>
+ [N] Add letters and numbers to side of board that match FEN positions. A-H & 1-8 <BR>
+ [P] Remove pieces from chess board/Make place to put them.<BR>
+ [N] Limit piece selector to side that is active In Play<BR>
+ [L] Make Start Game Button Work. <BR>
+ [L] Remove selector for Rotate mode. <BR>
+ [F] (Menu option) Import/Export/Record FEN moves. <BR>
+ [F] Add AI and rules with stockfish.js chess engine<BR>
+ [F] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
+ [N] Fix init() location , so that it makes sense.<BR> 
+ [L] Show options the piece can move once selected.<BR>
+ [F] Make DAE meshes convert to three mesh by removing and add back to scence.(remove conversion hacks)<BR>
+ [F] Animate / make draggable a selected piece.(Have to remove mesh hacks first.) <BR>
+ [F] Once mouse up event detected on draggable object,make sure location is within chess rules.Else revert back.<BR>
+ 
+ 
  
  
  
