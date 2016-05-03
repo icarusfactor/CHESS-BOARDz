@@ -50,7 +50,7 @@ TODO:<BR>
  [N] Limit piece selector to side that is active In Play<BR>
  [L] Make Start Game Button Work. <BR>
  [L] Remove selector for Rotate mode. <BR>
- [F] (Menu option) Import/Export/Record FEN moves. <BR>
+ [F] Import / Export / Record FEN moves.(Menu Option) <BR>
  [F] Add AI and rules with stockfish.js chess engine<BR>
  [I] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
  [N] Fix init() location , so that it makes sense.<BR> 
