@@ -45,17 +45,18 @@ TODO:<BR>
  <BR>
  [N] Integrate modified chessboard.js to get FEN data.<BR>
  [N] Add letters and numbers to side of board that match FEN positions. A-H & 1-8 <BR>
- [P] Remove pieces from chess board/Make place to put them.<BR>
+ [N] Pieces taken out of chess game/Make place to put them.<BR>
+ [P] Return color of piece W or B to moved chess piece.<BR> 
  [N] Limit piece selector to side that is active In Play<BR>
  [L] Make Start Game Button Work. <BR>
  [L] Remove selector for Rotate mode. <BR>
  [F] (Menu option) Import/Export/Record FEN moves. <BR>
  [F] Add AI and rules with stockfish.js chess engine<BR>
- [F] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
+ [I] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
  [N] Fix init() location , so that it makes sense.<BR> 
  [L] Show options the piece can move once selected.<BR>
  [F] Make DAE meshes convert to three mesh by removing and add back to scence.(remove conversion hacks)<BR>
- [F] Animate / make draggable a selected piece.(Have to remove mesh hacks first.) <BR>
+ [I] Animate / make draggable a selected piece.(Have to remove mesh hacks first.) <BR>
  [F] Once mouse up event detected on draggable object,make sure location is within chess rules.Else revert back.<BR>
  
  
