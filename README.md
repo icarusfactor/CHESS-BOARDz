@@ -10,10 +10,18 @@ DESIGN GUIDELINES:<BR>
  *Each model is a one piece mesh. Not multiple. Made and exported in Blender. <BR>
   *On top of using WebGL I want to use latest HTML5 and CSS3 elements.<BR>
   *Want to keep basic colors and not textures for now. If a texture is used<BR>
- convert it into a CSS element, so it can be trafered easily with script. <BR>
- *Keep this version of the game classical, any marjor <BR>
+ convert it into a CSS element, so it can be transfered easily with script. <BR>
+ *Keep this version of the game classical, any major <BR>
  variations can be forked off.<BR> 
- Had to genereate the squares after pieces inside init(), order of operation made it work.<BR>  
+ Had to genereate the squares after pieces inside init(), order of operation made it work.<BR>
+ The init() function does not kick off correctly,you will have to manaully click the "init hack"<BR>
+ button to get it to work. The loading of the DAE meshes are different rotation alignments than the<BR>
+ three.js meshes.So when animating or moving the mesh it gets converted to a three mesh after you<BR>
+ remove then add it back. So I had to add hacks into the script to deal with this issue. The <BR>
+ fix will be to "add" and "remove" then "add" again to syncronizes up all the parts. this will be<BR>
+ needing done if i want to do animation or drag moves. For now moving piece from one square to another<BR>
+ will be fine.<BR>
+ 
 <BR>
 IRC:
 You can catch me online as user factor using<BR>
