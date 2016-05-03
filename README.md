@@ -30,7 +30,7 @@ Chat Rooms #tulsalug #three.js #webgl ##chess #blender<BR>
 <BR>
 Other sites and githubs used<BR>
 <BR>
-  STOCKFISH.JS Chess engine in Javascript http://www.stockfishchess.com/
+  STOCKFISH.JS Chess engine in Javascript http://www.stockfishchess.com/<BR>
   CHESSBOARD.JS  http://chessboardjs.com  https://github.com/oakmac/chessboardjs/ <BR>
   THREE.JS  http://threejs.org/  https://github.com/mrdoob/three.js/ <BR>
   HTML5 audio API XM MOD player https://github.com/junghans-schneider/ModPlayer.js <BR>
