@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-        <script>var version="053016-1907"</script>
+        <script>var version="051616-0418"</script>
 	<head>
 		<title>CHESS BOARDz</title>
 		<meta http-equiv="cache-control" content="max-age=0" />
@@ -38,6 +38,7 @@
 	<script src="js/loaders/collada/KeyFrameAnimation.js"></script>
 	<script src="js/loaders/ColladaLoader.js"></script>
 	<script src="js/Detector.js"></script>
+	<script src="js/utils/GeometryUtils.js"></script>
 
 		         
 	</div>			
@@ -87,7 +88,7 @@
 
 		
 
-		<script>  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();</script>
+		<script>  if ( ! Detector.webgl ) Detector.addGetWebGLMessage(); THREE.Cache.enabled = false;</script>
 		
 		
 		
@@ -115,6 +116,7 @@
 		<script src="js/colladapieces.js"></script>
 		<script src="js/colladamaterials.js"></script>
 		<script src="js/chessboardparts.js"></script>
+		<script src="js/boardfont.js"></script>
 		
 		<script>
 
@@ -172,9 +174,11 @@
                                  //Check piece to see if its white PIECE_W or black PIECE_B. If black invert Z axis,since they are rotated 180.
                                  if( SELECTED_PIECE.name.match(/PIECE_B/gi)  ){
                                  console.log("BLACK PIECE FOUND: "+SELECTED_PIECE.name );
+                                 
                                  }
                                  else {
                                  console.log("WHITE PIECE FOUND: "+SELECTED_PIECE.name ); 
+                                 
                                  }
 		         
 			        
@@ -197,9 +201,7 @@
 			                 //position is transform. So need to find point A . Point B . and the different between them.   
 			                   
 			                if ( INTERSECTBOARD ) {
-			                   //INTERSECTBOARD.x = INTERSECTBOARD.matrixWorld.getPosition().x;
-			         	   //INTERSECTBOARD.y = INTERSECTBOARD.matrixWorld.getPosition().y;
-				           //INTERSECTBOARD.z = INTERSECTBOARD.matrixWorld.getPosition().z;	
+			                  	
                                            INTERSECTBOARD.x = INTERSECTBOARD.position.x;
 			         	   INTERSECTBOARD.y = INTERSECTBOARD.position.y;
 				           INTERSECTBOARD.z = INTERSECTBOARD.position.z;	
@@ -234,6 +236,10 @@
                                            console.log( "NEW PIECE POS x:"+SELECTED_PIECE.position.x+" y:"+SELECTED_PIECE.position.y+" z:"+SELECTED_PIECE.position.z     );
                                            
                                     
+                                    
+                                                                  
+			                            
+			                         
 			                  
 			                    SELECTED_BOARD=null;
 			                    game_mode=0;	
@@ -243,11 +249,15 @@
 						SELECTED_PIECE.geometry.buffersNeedUpdate = true;
 						SELECTED_PIECE.geometry.uvsNeedUpdate = true;
 			                    
+			                    
 			                     }
 			                     
-			                     
+			                  
+			                   
 			                //toggle only if on piece. 			                
-			                if ( INTERSECTED ) {
+			                if ( INTERSECTED ) {		
+			                	
+			                  
 			                   INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 			                   INTERSECTED = null;
 			                   SELECTED_PIECE=null;
@@ -266,7 +276,12 @@
 						
 			}
 			                                 
-						
+				 if( SELECTED_PIECE.name.match(/PIECE_B/gi)  ){                 
+			                              SELECTED_PIECE.material.color.setHex( 0x000000 );
+			                              }
+                                                 else {   
+                                                     SELECTED_PIECE.material.color.setHex( 0xffffff );
+                                                      }		
 			
 			
 			}
@@ -553,7 +568,7 @@
 	</script>
 	
 	
-	<script >init();</script>
+	<script >window.onload = init();</script>
 	
 	</body>
 </html>

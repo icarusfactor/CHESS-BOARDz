@@ -1,4 +1,4 @@
-			var version_materials="050116-2257";
+			var version_materials="050316-0409";
 			
 			
 			var material_black_p1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });		
@@ -159,77 +159,77 @@ var CURRENT_PIECE_POS = ["Wr2",0,0,"Y",
 	
 	
 //initial board positions.
-var BOARD_POS = ["L4-4-2",0,0,
-                 "D4-4-2",0,1,
-                 "L4-3-2",0,2,
-                 "D4-3-2",0,3,
-                 "L4-2-2",0,4,
-                 "D4-2-2",0,5,
-                 "L4-1-2",0,6,
-                 "D4-1-2",0,7,
+var BOARD_POS = ["L4-4-2",0,0,"Y",
+                 "D4-4-2",0,1,"Y",
+                 "L4-3-2",0,2,"Y",
+                 "D4-3-2",0,3,"Y",
+                 "L4-2-2",0,4,"Y",
+                 "D4-2-2",0,5,"Y",
+                 "L4-1-2",0,6,"Y",
+                 "D4-1-2",0,7,"Y",
 
-                 "D4-4-1",1,0,
-                 "L4-4-1",1,1,
-                 "D4-3-1",1,2,
-                 "L4-3-1",1,3,
-                 "D4-2-1",1,4,
-                 "L4-2-1",1,5,
-                 "D4-1-1",1,6,
-                 "L4-1-1",1,7,
+                 "D4-4-1",1,0,"Y",
+                 "L4-4-1",1,1,"Y",
+                 "D4-3-1",1,2,"Y",
+                 "L4-3-1",1,3,"Y",
+                 "D4-2-1",1,4,"Y",
+                 "L4-2-1",1,5,"Y",
+                 "D4-1-1",1,6,"Y",
+                 "L4-1-1",1,7,"Y",
                 
-                 "L3-4-2",2,0,
-                 "D3-4-2",2,1,
-                 "L3-3-2",2,2,
-                 "D3-3-2",2,3,
-                 "L3-2-2",2,4,
-                 "D3-2-2",2,5,
-                 "L3-1-2",2,6,
-                 "D3-1-2",2,7,
+                 "L3-4-2",2,0,"N",
+                 "D3-4-2",2,1,"N",
+                 "L3-3-2",2,2,"N",
+                 "D3-3-2",2,3,"N",
+                 "L3-2-2",2,4,"N",
+                 "D3-2-2",2,5,"N",
+                 "L3-1-2",2,6,"N",
+                 "D3-1-2",2,7,"N",
 
-                 "D3-4-1",3,0,
-                 "L3-4-1",3,1,
-                 "D3-3-1",3,2,
-                 "L3-3-1",3,3,
-                 "D3-2-1",3,4,
-                 "L3-2-1",3,5,
-                 "D3-1-1",3,6,
-                 "L3-1-1",3,7,
+                 "D3-4-1",3,0,"N",
+                 "L3-4-1",3,1,"N",
+                 "D3-3-1",3,2,"N",
+                 "L3-3-1",3,3,"N",
+                 "D3-2-1",3,4,"N",
+                 "L3-2-1",3,5,"N",
+                 "D3-1-1",3,6,"N",
+                 "L3-1-1",3,7,"N",
 
-                 "L2-4-2",4,0,
-                 "D2-4-2",4,1,
-                 "L2-3-2",4,2,
-                 "D2-3-2",4,3,
-                 "L2-2-2",4,4,
-                 "D2-2-2",4,5,
-                 "L2-1-2",4,6,
-                 "D2-1-2",4,7,
+                 "L2-4-2",4,0,"N",
+                 "D2-4-2",4,1,"N",
+                 "L2-3-2",4,2,"N",
+                 "D2-3-2",4,3,"N",
+                 "L2-2-2",4,4,"N",
+                 "D2-2-2",4,5,"N",
+                 "L2-1-2",4,6,"N",
+                 "D2-1-2",4,7,"N",
 
-                 "D2-4-1",5,0,
-                 "L2-4-1",5,1,
-                 "D2-3-1",5,2,
-                 "L2-3-1",5,3,
-                 "D2-2-1",5,4,
-                 "L2-2-1",5,5,
-                 "D2-1-1",5,6,
-                 "L2-1-1",5,7,
+                 "D2-4-1",5,0,"N",
+                 "L2-4-1",5,1,"N",
+                 "D2-3-1",5,2,"N",
+                 "L2-3-1",5,3,"N",
+                 "D2-2-1",5,4,"N",
+                 "L2-2-1",5,5,"N",
+                 "D2-1-1",5,6,"N",
+                 "L2-1-1",5,7,"N",
 
-                 "L1-4-2",6,0,
-                 "D1-4-2",6,1,
-                 "L1-3-2",6,2,
-                 "D1-3-2",6,3,
-                 "L1-2-2",6,4,
-                 "D1-2-2",6,5,
-                 "L1-1-2",6,6,
-                 "D1-1-2",6,7,
+                 "L1-4-2",6,0,"Y",
+                 "D1-4-2",6,1,"Y",
+                 "L1-3-2",6,2,"Y",
+                 "D1-3-2",6,3,"Y",
+                 "L1-2-2",6,4,"Y",
+                 "D1-2-2",6,5,"Y",
+                 "L1-1-2",6,6,"Y",
+                 "D1-1-2",6,7,"Y",
 
-                 "D1-4-1",7,0,
-                 "L1-4-1",7,1,
-                 "D1-3-1",7,2,
-                 "L1-3-1",7,3,
-                 "D1-2-1",7,4,
-                 "L1-2-1",7,5,
-                 "D1-1-1",7,6,
-                 "L1-1-1",7,7];
+                 "D1-4-1",7,0,"Y",
+                 "L1-4-1",7,1,"Y",
+                 "D1-3-1",7,2,"Y",
+                 "L1-3-1",7,3,"Y",
+                 "D1-2-1",7,4,"Y",
+                 "L1-2-1",7,5,"Y",
+                 "D1-1-1",7,6,"Y",
+                 "L1-1-1",7,7,"Y"];
 	
 		
 	
@@ -257,7 +257,7 @@ var BOARD_POS = ["L4-4-2",0,0,
     ];
 
 	
-	var parthack=0;
+	
 	
 	
 			//setMaterial(dae, new THREE.MeshBasicMaterial({color: 0xff0000}));
@@ -331,9 +331,13 @@ var BOARD_POS = ["L4-4-2",0,0,
 
                                 }
                       
-
+                      
                        var moveDAE = function( nodedae ,newnodedae, boarddaex, boarddaey , daecolor ) {	
      
+                           //I need to add position data to and from. 
+                           //Unmark 4th position in board data N 
+                           //Mark 4th position in board to Y
+                           
                           
                           console.log("moveDAE "+nodedae.name ); 
                           unsetDAE( nodedae );
@@ -344,11 +348,7 @@ var BOARD_POS = ["L4-4-2",0,0,
 			  nodedae.position.x = -1 * boarddaey+3.3;    //default 1.0
 			  nodedae.position.y = 0.0;	
 			  nodedae.position.z = -1 * boarddaex+3.7; // default 1.0	
-			  //setMaterial(nodedae, new THREE.MeshBasicMaterial({color: 0xff0000}) );
-			  //nodedae.updateMatrix()
-			  //nodedae.castShadow = true;
-			  //nodedae.receiveShadow = true;
-			  //nodedae.parent.add( nodedae );
+			  
 			  scene.add( nodedae );		
 			  
 			  if( nodedae.name.match(/PIECE_/) ) {
@@ -364,9 +364,7 @@ var BOARD_POS = ["L4-4-2",0,0,
 			  nodedae.position.y = 0.0;
 			  nodedae.position.x =  -1 * boarddaey+3.3;  //-1 * boarddaex+2.0;  //-1 * mat_col_abs[ CURRENT_PIECE_POS[ pief+1 ] ];
 			  nodedae.rotateX( 29.9 );
-			  //scence.roateX(30);
-			  //nodedae.rotateZ( 30 );
-			  //nodedae.rotateY( 30 );
+			  
 			  CURRENT_PIECE_POS[ pief+3 ]="N";
 			  
 			  }

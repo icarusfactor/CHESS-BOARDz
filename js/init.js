@@ -1,4 +1,4 @@
-	var version_init="050116_0223";
+	var version_init="051616_0420";
 
 	function animate() {
 
@@ -89,6 +89,20 @@
 				setDAE( pawns[14] ,  material_black_p7 );
 				setDAE( pawns[15] ,  material_black_p8 );
 	
+
+				material = new THREE.MultiMaterial( [
+					new THREE.MeshPhongMaterial( { color: 0xffffff, shading: THREE.FlatShading } ), // front
+					new THREE.MeshPhongMaterial( { color: 0xffffff, shading: THREE.SmoothShading } ) // side
+				] );
+
+				group = new THREE.Group();
+				group.position.y = 5;
+
+				scene.add( group );
+
+				loadFont();
+                                
+
 				
 				console.log("INIT() ALMOST ALMOST ENDED");
 				
