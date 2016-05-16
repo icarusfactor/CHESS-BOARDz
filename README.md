@@ -44,6 +44,7 @@ TODO:<BR>
  F = Good feature to have,if I get a chance to add it.<BR>
  X = COMPLETED<BR>
  <BR>
+ [N] Change names of pieces and board locations displayed from variable names to names and FEN locations.<BR>
  [N] Integrate modified chessboard.js to get FEN data.<BR>
  [N] Pieces taken out of chess game/Make place to put them.<BR>
  [N] Limit piece selector to side that is active In Play<BR>
