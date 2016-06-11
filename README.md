@@ -44,20 +44,27 @@ TODO:<BR>
  F = Good feature to have,if I get a chance to add it.<BR>
  X = COMPLETED<BR>
  <BR>
- [N] Change names of pieces and board locations displayed from variable names to names and FEN locations.<BR>
  [N] Integrate modified chessboard.js to get FEN data.<BR>
- [N] Pieces taken out of chess game/Make place to put them.<BR>
  [N] Limit piece selector to side that is active In Play<BR>
  [L] Make Start Game Button Work. <BR>
  [L] Remove selector for Rotate mode. <BR>
  [F] Import / Export / Record FEN moves.(Menu Option) <BR>
  [F] Add AI and rules with stockfish.js chess engine<BR>
  [I] Add HTML5 Web Audio API XM MOD Player for background music selection. <BR>
- [N] Fix init() location , so that it makes sense.<BR> 
+ [N] Fix init() location , so that it makes sense and works on load.<BR> 
  [L] Show options the piece can move once selected.<BR>
  [F] Make DAE meshes convert to three mesh by removing and add back to scene.(remove conversion hacks)<BR>
  [I] Animate / make draggable a selected piece.(Have to remove mesh hacks first.) <BR>
  [F] Once mouse up event detected on draggable object,make sure location is within chess rules.Else revert back.<BR>
+ [P] Add spotlight to light up movable squares.<BR>
+ [N] Rotate TOP view so pieces that have been taken out of game can be seen.<BR>
+ [N] Start game with white mode in view instead of rotate mode.<BR>
+ [I] Make Multiplayer with remote players.<BR>
+ [I] Add rules of game section.<BR> 
+ [N] Fix roatation after first move of knight.<BR>
+ [N] Add END GAME options to actions. <BR>
+ 
+ 
  
  
  
