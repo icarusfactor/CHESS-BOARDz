@@ -1,4 +1,4 @@
-	        var version_boardparts="043016_0249";
+	        var version_boardparts="060116_0510";
 	
 	
 	
@@ -9,6 +9,8 @@
 		var square_materialD = [];
 		var square = [];	
 		var squareD = [];
+		
+		
 		
 						
 		//Light Squares	
@@ -60,6 +62,41 @@
 				
 				}		
 				
+		
+		//LIMBO for captured pieces. 
+		var limbo_square_geometry = [];
+		var limbo_square_material = [];
+		var limbosquare_materialD = [];
+		var limbo_square = [];	
+		//var limbo_squareD = [];
+		
+		
+		//LIMBO Light Squares	
+		var setLIMBOSquares = function( offset ,offset2, SQname ) {		
+		   for ( var r = 1; r < 5; r++  ) {	
+		   for ( var i = 1; i < 5; i++  ) {
+			//LIMBO Squares	
+			        limbo_square_geometry = new THREE.BoxGeometry(290, 60, 290, 10, 0, 10 );	
+				limbo_square_material[i*r] = new THREE.MeshBasicMaterial({color: 0x888888 });	
+			     	limbo_square[i*r] = new THREE.Mesh(limbo_square_geometry, limbo_square_material[i*r]);	
+			     	
+				limbo_square_material[i*r].name = "BOARD_L"+r+"-"+i+"-"+SQname;								
+				limbo_square[i*r].scale.x = limbo_square[i*r].scale.y = limbo_square[i*r].scale.z = 0.002;				
+				//limbo_square[i*r].position.x = offset +( 2 * (i+1));
+                                limbo_square[i*r].position.x = offset +(i+1);
+				limbo_square[i*r].position.y = -0.1 //-0.4;
+				limbo_square[i*r].position.z = offset + offset2 +(r-1);
+				limbo_square[i*r].castShadow = true;
+				limbo_square[i*r].receiveShadow = true;
+				scene.add( limbo_square[i*r] );
+				
+				}
+				}
+				
+				}	
+		
+		
+		
 				
 		// Grid
 //		var size = 4, step = 1;

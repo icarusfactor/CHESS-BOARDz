@@ -1,4 +1,4 @@
-	var version_init="051616_0420";
+	var version_init="052716_0500";
 
 	function animate() {
 
@@ -36,6 +36,9 @@
 				setSquaresD( -3.5, 1.0, "1" );				
 				setSquaresD( -2.5, -1.0,"2" );
 				
+				setLIMBOSquares( -10.0, 6.0, "W" );
+
+				setLIMBOSquares( -10.0, 11.0, "B" );
 				
 				console.log("INIT() ALMOST ALMOST ALMOST ENDED");
 							

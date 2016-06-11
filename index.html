@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-        <script>var version="051616-0418"</script>
+        <script>var version="060116-0510"</script>
 	<head>
 		<title>CHESS BOARDz</title>
 		<meta http-equiv="cache-control" content="max-age=0" />
@@ -174,16 +174,29 @@
                                  //Check piece to see if its white PIECE_W or black PIECE_B. If black invert Z axis,since they are rotated 180.
                                  if( SELECTED_PIECE.name.match(/PIECE_B/gi)  ){
                                  console.log("BLACK PIECE FOUND: "+SELECTED_PIECE.name );
+                                 var sname = SELECTED_PIECE.name;
+                                 sname = SELECTED_PIECE.name.substring(6,9);
+                                 var blocoff = PIECE_POS.indexOf( sname );
+                                 chessgame.infodata.innerHTML = "SEL: "+ PIECE_POS[ blocoff+3 ] +" " ;
                                  
                                  }
                                  else {
                                  console.log("WHITE PIECE FOUND: "+SELECTED_PIECE.name ); 
+                                 sname = SELECTED_PIECE.name;
+                                 sname = SELECTED_PIECE.name.substring(6,9);
+                                 blocoff = PIECE_POS.indexOf( sname );
+                                 chessgame.infodata.innerHTML = "SEL: "+ PIECE_POS[ blocoff+3 ] +" " ;
                                  
                                  }
 		         
 			        
 			        console.log( "PIECE x:"+SELECTED_PIECE.position.x+" y:"+SELECTED_PIECE.position.y+" z:"+SELECTED_PIECE.position.z     );
-			        chessgame.infodata.innerHTML = "SEL: "+SELECTED_PIECE.name+" " ;
+
+                                  
+                                                      
+                                
+
+			        //chessgame.infodata.innerHTML = "SEL: "+SELECTED_PIECE.name+" " ;
 			        
 			        			        
 			        //toggle game mode
@@ -370,15 +383,34 @@
 						
 						
 						INTERSECTED.name = INTERSECTED.material.name;
-						INTERSECTED.position.x    = INTERSECTED.position.x;
-						INTERSECTED.position.y    = INTERSECTED.position.y;
-						INTERSECTED.position.z    = INTERSECTED.position.z;
+						//INTERSECTED.position.x    = INTERSECTED.position.x;
+						//INTERSECTED.position.y    = INTERSECTED.position.y;
+						//INTERSECTED.position.z    = INTERSECTED.position.z;
                                                 
 						
 						console.log("HOVER: "+INTERSECTED.name );
-												
-						//need to make this global or a class			
-						chessgame.infodata.innerHTML = " "+INTERSECTED.name+" " ;
+						console.log( "BOARD x:"+INTERSECTED.position.x+" y:"+INTERSECTED.position.y+" z:"+INTERSECTED.position.z ); 						
+						//need to make this global or a class	
+                                                
+                                                 if( INTERSECTED.name.match(/PIECE_B/gi)  ){
+                                                 console.log("BLACK PIECE FOUND: "+INTERSECTED.name );
+                                                 var sname = INTERSECTED.name;
+                                                 sname = INTERSECTED.name.substring(6,9);
+                                                 var blocoff = PIECE_POS.indexOf( sname );
+                                                 chessgame.infodata.innerHTML = " "+ PIECE_POS[ blocoff+3 ] +" " ;
+                                 
+                                                 }
+                                                 else {
+                                                 console.log("WHITE PIECE FOUND: "+INTERSECTED.name ); 
+                                                 sname = INTERSECTED.name;
+                                                 sname = INTERSECTED.name.substring(6,9);
+                                                 blocoff = PIECE_POS.indexOf( sname );
+                                                 chessgame.infodata.innerHTML = " "+ PIECE_POS[ blocoff+3 ] +" " ;
+                                 
+                                                 }
+
+		
+						//chessgame.infodata.innerHTML = " "+INTERSECTED.name+" " ;
 						//setMaterial(INTERSECTED, square_materialD );
 						
 						INTERSECTED.material.color.setHex( 0xff0000 );
@@ -419,9 +451,20 @@
 						
 										
 						console.log("HOVER : "+INTERSECTBOARD.name );
-						
-											
-						chessgame.infodata.innerHTML = " "+INTERSECTBOARD.name+" " ;
+					
+
+                                                blocoff = BOARD_POS.indexOf( "BOARD_"+INTERSECTBOARD.name ); 
+                                                var sname = INTERSECTBOARD.name;
+                                                sname = sname.substring(6,12);                     
+                                                var blocoff = BOARD_POS.indexOf( sname );
+                                                chessgame.infodata.innerHTML = " "+BOARD_POS[ blocoff + 4 ]+" " ;
+
+
+                                                //chessgame.infodata.innerHTML = " "+INTERSECTBOARD.name+" " ;
+
+
+
+
 						//setMaterial(INTERSECTED, square_materialD );
 						
 						INTERSECTBOARD.material.color.setHex( 0xff0000 );
