@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-        <script>var version="060116-0510"</script>
+        <script>var version="112216-0107"</script>
 	<head>
 		<title>CHESS BOARDz</title>
 		<meta http-equiv="cache-control" content="max-age=0" />
@@ -11,6 +11,26 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
                 <link rel="stylesheet" type="text/css" href="css/theme.css">	
+                <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+                <link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+                <link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+                <link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+                <link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+                <link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+                <link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+                <link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+                <link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+                <link rel="icon" type="image/png" sizes="192x192"  href="/favico/android-icon-192x192.png">
+                <link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+                <link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+                <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+                <link rel="icon" href="/favico/favicon.ico" type="image/x-icon" >
+                <link rel="manifest" href="/favico/manifest.json">
+                <meta name="msapplication-TileColor" content="#ffffff">
+                <meta name="msapplication-TileImage" content="/favico/ms-icon-144x144.png">
+                <meta name="theme-color" content="#ffffff">    
+
+
 	</head>
 	
 	<body style='' onkeypress='chessgame.keypress(event)' onload='javascript:createGame();' >
@@ -78,8 +98,11 @@
        
         </ul>
     	   </li>
-    	    <li  style="float:right;list-style-type:none;"  ><a href="javascript:init();">::INIT HACK::</a></li>  
-	</ul>
+    	    <li  style="float:right;list-style-type:none;"  ><a href="javascript:init();">::INIT HACK::</a></li> 
+            <li  style="float:right;list-style-type:none;"  ><a href="javascript:FENupdate();">DEBUG A</a></li> <!-- paintOrig()  -->
+            <li  style="float:right;list-style-type:none;"  ><a href="javascript:paintBoard( Mrook , 1 , 1  );">DEBUG B</a></li>
+	</ul> 
+	
 	</nav>		
 	
 	</div>			
@@ -98,6 +121,11 @@
 		var container;
 			var camera, scene, renderer, raycaster ,objects,spin;
 			var particleLight;
+                        
+                        // save piece FEN name here. for use with update. 
+                        var selected_move_piece = "";
+                        var selected_move_piece_color = "";
+
 			var game_mode =0; //default mode hover piece.
 			
 			//var mouse = new THREE.Vector2(), INTERSECTED,SELECTED_PIECE,INTERSECTED,INTERSECTBOARD,SELECTED_BOARD;
@@ -131,7 +159,7 @@
 			function theDomHasLoaded(e) {
 				// do something
 				console.log("LOADED" );
-				init();
+				//init();
 						    }
  
 			function pageFullyLoaded(e) {
@@ -248,12 +276,25 @@
                                            console.log( "HYBRID PIECE POS x:"+INTERSECTBOARD.x+" z:"+ INTERSECTBOARD.z    );
                                            console.log( "NEW PIECE POS x:"+SELECTED_PIECE.position.x+" y:"+SELECTED_PIECE.position.y+" z:"+SELECTED_PIECE.position.z     );
                                            
+                                           
                                     
-                                    
-                                                                  
-			                            
+                                            //Get data from BOARD_POS +4
+                                            var newname = BOARD_POS[ blocoff+4 ];
+
+                                            //Find Name of selected piece
+                                            if( SELECTED_PIECE.name.match(/PIECE_/) ) {
+                                            //Search the PIECE array for conversion Y or N.    
+                                            var blocoffnew = CURRENT_PIECE_POS.indexOf( "PIECE_"+SELECTED_PIECE.name ); 
+                                            var snamenew = SELECTED_PIECE.name;
+                                            snamenew = snamenew.substring(6,9);                     
+                                            var piefnew = CURRENT_PIECE_POS.indexOf( snamenew );
+                                            console.log("NEW PIECE NAME: "+snamenew );                                            
+                                            
+                                            //Put data into CURRENT_BOARD_POS +4     
+                                            CURRENT_PIECE_POS[ piefnew+4 ]  =   newname      
+			                                                              } //end of new piece position   
 			                         
-			                  
+			                    paintOrig();
 			                    SELECTED_BOARD=null;
 			                    game_mode=0;	
 			                    
@@ -298,6 +339,11 @@
 			
 			
 			}
+
+                         function degInRad(deg) {
+                             return deg * Math.PI / 180;
+                                                }
+
 			
 			var setSpinCAM = function() {	
 				spin = 1;	
@@ -352,14 +398,21 @@
 			var setTopCAM = function() {
 				spin = 4;	
 				
-				//Top position			        
-				camera.position.x = 0;
-				camera.position.y = 15;
-				camera.position.z = 0;
+				//Top position
+			        
+				camera.position.y = 18;				
+                                rotation = 0.00; 
+                                camera.position.x = Math.sin(rotation) ;
+                                camera.position.z = Math.cos(rotation) ;
+                                
+                               
+     
+                                                   
 				
 				particleLight.position.x = 0;
 				particleLight.position.y = 25000;
 				particleLight.position.z = 0;
+                                
 						
 				}
 			
@@ -398,7 +451,8 @@
                                                  sname = INTERSECTED.name.substring(6,9);
                                                  var blocoff = PIECE_POS.indexOf( sname );
                                                  chessgame.infodata.innerHTML = " "+ PIECE_POS[ blocoff+3 ] +" " ;
-                                 
+                                                 selected_move_piece = INTERSECTED.name;
+                                                 selected_move_piece_color = "B";
                                                  }
                                                  else {
                                                  console.log("WHITE PIECE FOUND: "+INTERSECTED.name ); 
@@ -406,7 +460,8 @@
                                                  sname = INTERSECTED.name.substring(6,9);
                                                  blocoff = PIECE_POS.indexOf( sname );
                                                  chessgame.infodata.innerHTML = " "+ PIECE_POS[ blocoff+3 ] +" " ;
-                                 
+                                                 selected_move_piece = INTERSECTED.name;
+                                                 selected_move_piece_color = "W";
                                                  }
 
 		
@@ -432,6 +487,8 @@
 
 
 			var scanBOARDintersect = function ( intersects ) {
+                                        
+                                        
 								
 
 					if ( INTERSECTBOARD != intersects[ 0 ].object ) {
@@ -458,7 +515,8 @@
                                                 sname = sname.substring(6,12);                     
                                                 var blocoff = BOARD_POS.indexOf( sname );
                                                 chessgame.infodata.innerHTML = " "+BOARD_POS[ blocoff + 4 ]+" " ;
-
+                                                   
+                                                update_piece_location( BOARD_POS[ blocoff + 4 ] , selected_move_piece );
 
                                                 //chessgame.infodata.innerHTML = " "+INTERSECTBOARD.name+" " ;
 
@@ -507,19 +565,24 @@
 				switch( game_mode ) {
 				case 0: 
 				 	//console.log("GAME MODE:"+game_mode ); 
+                                        
 					ChessMoveMode0();
+
 					break;
 				case 1:
 					//console.log("GAME MODE:"+game_mode ); 
-					ChessMoveMode1();
+					ChessMoveMode1(); 
+                                                                              
+                                        //went from hover to selected mode                                         
+                                        //update_piece_location("D4","PIECE_WK");
 					break;
 				
 				default:
 					ChessMoveMode0();
-				
+				        
 				}
 			
-
+                                
 				} //end of selectandmove
 
 
@@ -528,7 +591,8 @@
 				//                        : HOVER SQUARE(DISABLE) SELECT SQUARE(DISABLE)  		
 				var ChessMoveMode0 = function () {
 				//set notification in game mode 0
-				game_mode=0;
+				game_mode=0;       
+            
 				scene.updateMatrixWorld();
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );	
@@ -564,6 +628,7 @@
 				
 				
 				if( SELECTED_BOARD.material.name.match(/BOARD_/) ) { 
+                                     //update_piece_location("D4","PIECE_WK");
 				     scanBOARDintersect( intersects );  }
 						
 

@@ -1,4 +1,4 @@
-	var version_init="052716_0500";
+	var version_init="071216_0421";
 
 	function animate() {
 
@@ -22,19 +22,14 @@
 
 				//setTopCAM();
 				
-				spin = 1; //switch to spin mode.
-
-					
-					
-								
+				spin = 1; //switch to spin mode.							
 					
 				
 
-										
-				setSquares( -3.5 ,"1");				
-				setSquares( -2.5 ,"2");
-				setSquaresD( -3.5, 1.0, "1" );				
-				setSquaresD( -2.5, -1.0,"2" );
+				setupBoard();
+                                //setupLimbo(); //need to find correct positions. 
+						
+				
 				
 				setLIMBOSquares( -10.0, 6.0, "W" );
 
@@ -104,7 +99,14 @@
 				scene.add( group );
 
 				loadFont();
-                                
+
+                                //var psphere = new THREE.SphereGeometry( 0.05, 0.05, 0.05 );  
+                                //light1 = new THREE.PointLight( 0xff0040, 1, 1 );
+                                //light1.add( new THREE.Mesh( psphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
+                                //light1.position.set(2,2,2);  
+                                //scene.add( light1 );
+                               
+
 
 				
 				console.log("INIT() ALMOST ALMOST ENDED");

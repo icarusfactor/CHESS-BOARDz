@@ -1,4 +1,4 @@
-			var version_materials="060116-0510";
+			var version_materials="112316-0247";
 			
 			
 			var material_black_p1 = new THREE.MeshPhongMaterial( { color: 0x000000,specular: 0xffffff,shininess: 20 });		
@@ -120,40 +120,64 @@ var PIECE_POS = ["Wr2",0,0,"WHITE ROOK",
                  "Bk1",7,6,"BLACK KNIGHT",
                  "Br1",7,7,"BLACK ROOK"];
 	
+
+// x=A-H y=1-8
+var FEN_BOARD_POS = ["0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0",
+                     "0","0","0","0","0","0","0","0"];
+
+var FEN_BOARD_INIT = ["0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0",
+                      "0","0","0","0","0","0","0","0"];               
+
+var FEN_EXPORT="";
+var FEN_IMPORT="";
+
 	
 //current piece board positions. Y or N has mesh been converted to Three mesh after removed then added. nodedae.rotateX( 30 );
-var CURRENT_PIECE_POS = ["Wr2",0,0,"Y",
-                 "Wk2",0,1,"Y",
-                 "Wb2",0,2,"Y",
-                 "WK" ,0,3,"Y",
-                 "WQ" ,0,4,"Y",
-                 "Wb1",0,5,"Y",
-                 "Wk1",0,6,"Y",
-                 "Wr1",0,7,"Y",
-                 "WP1",1,0,"Y",
-                 "WP2",1,1,"Y",
-                 "WP3",1,2,"Y",
-                 "WP4",1,3,"Y",
-                 "WP5",1,4,"Y",
-                 "WP6",1,5,"Y",
-                 "WP7",1,6,"Y",
-                 "WP8",1,7,"Y",            
-                 "BP1",6,0,"Y",
-                 "BP2",6,1,"Y",
-                 "BP3",6,2,"Y",
-                 "BP4",6,3,"Y",
-                 "BP5",6,4,"Y",
-                 "BP6",6,5,"Y",
-                 "BP7",6,6,"Y",
-                 "BP8",6,7,"Y",
-                 "Br2",7,0,"Y",
-                 "Bk2",7,1,"Y",
-                 "Bb2",7,2,"Y",
-                 "BK" ,7,3,"Y",
-                 "BQ" ,7,4,"Y",
-                 "Bb1",7,5,"Y",
-                 "Bk1",7,6,"Y",
-                 "Br1",7,7,"Y"];
+var CURRENT_PIECE_POS = [
+                 "Wr2",0,0,"Y","H1",
+                 "Wk2",0,1,"Y","G1",
+                 "Wb2",0,2,"Y","F1",
+                 "WK" ,0,3,"Y","E1",
+                 "WQ" ,0,4,"Y","D1",
+                 "Wb1",0,5,"Y","C1",
+                 "Wk1",0,6,"Y","B1",
+                 "Wr1",0,7,"Y","A1",
+                 "WP1",1,0,"Y","H2",
+                 "WP2",1,1,"Y","G2",
+                 "WP3",1,2,"Y","F2",
+                 "WP4",1,3,"Y","E2",
+                 "WP5",1,4,"Y","D2",
+                 "WP6",1,5,"Y","C2",
+                 "WP7",1,6,"Y","B2",
+                 "WP8",1,7,"Y","A2",       
+                 "BP1",6,0,"Y","H7",
+                 "BP2",6,1,"Y","G7",
+                 "BP3",6,2,"Y","F7",
+                 "BP4",6,3,"Y","E7",
+                 "BP5",6,4,"Y","D7",
+                 "BP6",6,5,"Y","C7",
+                 "BP7",6,6,"Y","B7",
+                 "BP8",6,7,"Y","A7",
+                 "Br2",7,0,"Y","H8",
+                 "Bk2",7,1,"Y","G8",
+                 "Bb2",7,2,"Y","F8",
+                 "BK" ,7,3,"Y","E8",
+                 "BQ" ,7,4,"Y","D8",
+                 "Bb1",7,5,"Y","C8",
+                 "Bk1",7,6,"Y","B8",
+                 "Br1",7,7,"Y","A8"];
 	
 	
 	
@@ -269,7 +293,7 @@ var BOARD_POS = ["L4-4-2",0,0,"Y","H1",
                  "L1-4-W",7.5, 8.5,"N","CW",
                  "L1-3-W",7.5, 9.5,"N","DW",
                  "L1-2-W",7.5,10.5,"N","EW",
-                 "L1-1-W",7.5,11.5,"N","FW"];
+                 "L1-1-W",7.5,11.5,"N","FW"]; // OFFSET -16.5 , -14.5
 	
 		
 //This is used for initial Set Position	of the pieces but that is it. 
@@ -359,15 +383,28 @@ var BOARD_POS = ["L4-4-2",0,0,"Y","H1",
 				nodedae.receiveShadow = true;
 				scene.add( nodedae );	
 				
-				//if( nodedae.name.match(/PIECE_/) ) {
+				if( nodedae.material.name.match(/PIECE_/gi) ) {
                                       //Search the piece position array for location. 
-                                      var sname = nodedae.material.name;
-                                      sname = sname.substring(6,9);                     
-                                      var blocoff = PIECE_POS.indexOf( sname );
-                                   console.log( " ( setDAE ) New Position "+sname+" "+blocoff+" of "+mat_row_abs[ PIECE_POS[ blocoff+2 ] ]+" X:"+ mat_col_abs[ PIECE_POS[ blocoff+1 ] ]  ); 
+                                var sname = nodedae.material.name;
+                                //var sname = nodedae.name;
+                                sname = sname.substring(6,9);                     
+                                var blocoff = PIECE_POS.indexOf( sname );
+                                console.log( " ( setDAE ) New Position "+sname+" "+blocoff+" of "+mat_row_abs[ PIECE_POS[ blocoff+2 ] ]+" X:"+ mat_col_abs[ PIECE_POS[ blocoff+1 ] ]  ); 
 				positionDAE( nodedae , mat_row_abs[ PIECE_POS[ blocoff+2 ] ]  ,  mat_col_abs[ PIECE_POS[ blocoff+1 ] ] );
 				
-			//	}
+				}
+				
+				if( nodedae.material.name.match(/BOARD_/gi) ) {
+                                      //Search the board position array for location. 
+                                var sname = nodedae.material.name;                                
+                                sname = sname.substring(6,12);                     
+                                var blocoff = BOARD_POS.indexOf( sname );
+                                console.log( " ( setDAE ) Position "+sname+" "+blocoff+" of "+mat_row_abs[ BOARD_POS[ blocoff+2 ] ]+" X:"+ mat_col_abs[ BOARD_POS[ blocoff+1 ] ]  ); 
+				positionDAE( nodedae , mat_row_abs[ BOARD_POS[ blocoff+2 ] ]  ,  mat_col_abs[ BOARD_POS[ blocoff+1 ] ] );
+				
+				}
+				
+				
 
                                 }
                       
@@ -429,4 +466,210 @@ var BOARD_POS = ["L4-4-2",0,0,"Y","H1",
                             }
 
 	
-				
+	
+//FEN I-O CONVERSION FUNCTIONS
+
+
+//  No Input needed: will read the current positions  
+ function FENupdate()
+{  
+//copy clean board so you can do this more than once. 
+  FEN_BOARD_POS.fill("0");    
+//SET FEN DATA 32 pieces
+  var NUMDB=5; // what place value for 2 char board position.
+  for (n = 0; n < 32; n++){
+   var LOCDAT    = CURRENT_PIECE_POS[(n*NUMDB)+4 ];
+   var LOCPIECE = CURRENT_PIECE_POS[n*NUMDB];
+   //console.log( "LOCDAT:"+LOCDAT+" LOCPIECE:"+LOCPIECE+" PIECE POS:"+n );
+   FENBoard(LOCPIECE , LOCDAT[1]  , LOCDAT[0]);
+   
+ }
+   console.log( FEN_BOARD_POS );
+ }
+
+
+//Set position in 			
+ function FENset(LOCPIECE,LOC_18, LOC_AH)
+ {
+  //need conversion of LOCPIECE to FEN PIECE
+  //  PpRrNnBbKkQq
+ var LOC_FEN;
+ switch ( LOCPIECE )
+        {
+        case "Wr1":  
+        LOC_FEN="R";
+        break;  
+
+        case "Wr2":
+        LOC_FEN="R";
+        break;
+
+        case "Wb1":
+        LOC_FEN="B";
+        break;
+
+        case "Wb2":
+        LOC_FEN="B";
+        break;
+
+        case "Wk1":
+        LOC_FEN="N";
+        break;
+
+        case "Wk2":
+        LOC_FEN="N";
+        break;
+
+        case "WK":
+        LOC_FEN="K";
+        break;
+
+        case "WQ":
+        LOC_FEN="Q";
+        break;
+
+        case "WP1":
+        LOC_FEN="P";
+        break;
+
+        case "WP2":
+        LOC_FEN="P";
+        break;
+
+        case "WP3":
+        LOC_FEN="P";
+        break;
+
+        case "WP4":
+        LOC_FEN="P";
+        break;
+
+        case "WP5":
+        LOC_FEN="P";
+        break;
+
+        case "WP6":
+        LOC_FEN="P";
+        break;
+
+        case "WP7":
+        LOC_FEN="P";
+        break;
+
+        case "WP8":
+        LOC_FEN="P";
+        break;        
+
+        case "Br1":  
+        LOC_FEN="r";
+        break;  
+
+        case "Br2":
+        LOC_FEN="r";
+        break;
+
+        case "Bb1":
+        LOC_FEN="b";
+        break;
+
+        case "Bb2":
+        LOC_FEN="b";
+        break;
+
+        case "Bk1":
+        LOC_FEN="n";
+        break;
+
+        case "Bk2":
+        LOC_FEN="n";
+        break;
+
+        case "BK":
+        LOC_FEN="k";
+        break;
+
+        case "BQ":
+        LOC_FEN="q";
+        break;
+
+        case "BP1":
+        LOC_FEN="p";
+        break;
+
+        case "BP2":
+        LOC_FEN="p";
+        break;
+
+        case "BP3":
+        LOC_FEN="p";
+        break;
+
+        case "BP4":
+        LOC_FEN="p";
+        break;
+
+        case "BP5":
+        LOC_FEN="p";
+        break;
+
+        case "BP6":
+        LOC_FEN="p";
+        break;
+
+        case "BP7":
+        LOC_FEN="p";
+        break;
+
+        case "BP8":
+        LOC_FEN="p";
+        break;
+
+        default:
+        //for pieces off the board. 
+        LOC_FEN="0"; //needs to be off board locations later. 
+        break;
+        }  
+
+//set the board with FEN character. 
+  FEN_BOARD_POS[ ((LOC_18 - 1) * 8 )+(LOC_AH - 1 ) ] = LOC_FEN; 
+  //console.log("CHESS PIECE: FEN:"+LOC_FEN+" PIECE:"+LOCPIECE+" 1-8: "+LOC_18+" A-H: "+LOC_AH );
+  
+ }
+
+//Convert and set board position to generate FEN.
+function FENBoard(LOCPIECE, LOC_18, LOC_AH)
+{
+  
+       switch ( LOC_AH )
+        {
+        case "A":  
+        FENset(LOCPIECE,LOC_18, 1 );       
+        break;
+        case "B":
+        FENset(LOCPIECE,LOC_18, 2 );
+        break;
+        case "C":
+        FENset(LOCPIECE,LOC_18, 3 );
+        break;
+        case "D":
+        FENset(LOCPIECE,LOC_18, 4 );
+        break;
+        case "E":
+        FENset(LOCPIECE,LOC_18, 5 );
+        break;
+        case "F":
+        FENset(LOCPIECE,LOC_18, 6 );
+        break;
+        case "G":
+        FENset(LOCPIECE ,LOC_18, 7 );
+        break;
+        case "H":
+        FENset(LOCPIECE,LOC_18, 8 );
+        break;
+        default:
+        //for pieces off the board. 
+        break;
+        }   
+        
+  }    
+
