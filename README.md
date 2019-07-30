@@ -1,7 +1,7 @@
 # CHESS-BOARDz
 WebGL Chess Board.
 <BR>
-Work in progress, does not play actual game yet - http://www.chessboardz.org
+Work in progress, does not play actual game yet - http://userspace.org/CHESS-BOARDz/
 
 DESIGN GUIDELINES:<BR>
  *Using different materials for each piece and designating its name in it.<BR>
